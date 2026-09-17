@@ -1,0 +1,22 @@
+{
+  "name": "youtube-agent-skill",
+  "description": "Eleven Claude skills for running a YouTube channel: scripts off 21 hook formulas with a scored hook, title and thumbnail linted as one pairing, an edit decision list from your transcript, a retention reader that finds the moments people leave, a Shorts finder, chapters, search, comments, the weekly plan, a channel audit, and outlier research that ranks your niche by each video's own-channel multiple.",
+  "version": "1.0.0",
+  "author": {
+    "name": "UtilLayer",
+    "url": "https://utillayer.com"
+  },
+  "homepage": "https://github.com/utillayer/youtube-agent-skill",
+  "repository": "https://github.com/utillayer/youtube-agent-skill",
+  "license": "MIT",
+  "keywords": [
+    "youtube",
+    "shorts",
+    "retention",
+    "thumbnails",
+    "titles",
+    "content",
+    "video",
+    "seo"
+  ]
+}

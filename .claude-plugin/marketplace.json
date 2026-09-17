@@ -1,0 +1,18 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "utillayer",
+  "description": "Claude skills by UtilLayer",
+  "owner": {
+    "name": "UtilLayer",
+    "url": "https://utillayer.com"
+  },
+  "plugins": [
+    {
+      "name": "youtube-agent-skill",
+      "description": "Eleven Claude skills for running a YouTube channel: scored hooks, title and thumbnail linting, edit decision lists, retention reading, Shorts finding, chapters and outlier research.",
+      "source": "./",
+      "category": "productivity",
+      "homepage": "https://github.com/utillayer/youtube-agent-skill"
+    }
+  ]
+}
