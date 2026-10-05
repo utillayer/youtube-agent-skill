@@ -1,0 +1,143 @@
+1
+00:00:00,000 --> 00:00:05,000
+Most channels lose a third of their viewers in the first thirty seconds.
+
+2
+00:00:05,300 --> 00:00:09,146
+Today I want to show you exactly why that happens.
+
+3
+00:00:09,346 --> 00:00:09,946
+um
+
+4
+00:00:10,146 --> 00:00:13,608
+And what you can change before your next upload.
+
+5
+00:00:15,208 --> 00:00:16,746
+Let's start with titles.
+
+6
+00:00:17,046 --> 00:00:22,431
+Your title has one job, which is to make a promise the viewer believes.
+
+7
+00:00:22,731 --> 00:00:26,962
+A title like amazing tips for growth promises nothing at all.
+
+8
+00:00:27,262 --> 00:00:31,108
+A title with a number in it promises something specific.
+
+9
+00:00:31,308 --> 00:00:34,769
+I tested forty titles across two channels last spring.
+
+10
+00:00:35,069 --> 00:00:39,300
+The ones with a concrete figure got clicked twice as often.
+
+11
+00:00:39,600 --> 00:00:40,369
+so yeah
+
+12
+00:00:40,969 --> 00:00:45,969
+Keep the title under sixty characters so search does not cut it off.
+
+13
+00:00:46,269 --> 00:00:52,038
+And put the subject in the first forty, because that is all a phone shows.
+
+14
+00:00:53,838 --> 00:00:54,608
+Now thumbnails.
+
+15
+00:00:54,908 --> 00:00:57,600
+The thumbnail should never repeat the title.
+
+16
+00:00:57,900 --> 00:01:03,285
+If the title says the number, the thumbnail shows the face or the result.
+
+17
+00:01:03,485 --> 00:01:08,100
+Three words is the most a thumbnail can carry at feed size.
+
+18
+00:01:08,400 --> 00:01:13,015
+A fourth word turns into a grey smear on a phone screen.
+
+19
+00:01:13,315 --> 00:01:13,915
+uh
+
+20
+00:01:14,215 --> 00:01:18,062
+Test two versions and keep the one that holds attention.
+
+21
+00:01:19,762 --> 00:01:23,223
+Why do viewers leave your videos at thirty seconds?
+
+22
+00:01:23,523 --> 00:01:25,831
+It is almost never the topic.
+
+23
+00:01:26,131 --> 00:01:31,515
+It is the gap between what the title promised and what the opening delivers.
+
+24
+00:01:31,815 --> 00:01:37,585
+If the first line does not confirm the click, people go back to the feed.
+
+25
+00:01:37,885 --> 00:01:39,808
+I think the fix is
+
+26
+00:01:40,208 --> 00:01:40,808
+um
+
+27
+00:01:41,008 --> 00:01:46,392
+I think the fix is to say the promise again in the first sentence.
+
+28
+00:01:46,692 --> 00:01:50,923
+Then open a question the viewer cannot close on their own.
+
+29
+00:01:51,223 --> 00:01:55,069
+And show them the payoff exists before the minute mark.
+
+30
+00:01:57,069 --> 00:01:58,223
+Finally, retention graphs.
+
+31
+00:01:58,523 --> 00:02:02,369
+Export the audience retention chart from studio once a week.
+
+32
+00:02:02,669 --> 00:02:07,285
+Look for cliffs, which are single moments where many people leave together.
+
+33
+00:02:07,585 --> 00:02:13,354
+A cliff is usually a topic change with no signpost, or a long sponsor read.
+
+34
+00:02:13,654 --> 00:02:18,654
+The slow slide across the middle is pacing, and the fix is cutting.
+
+35
+00:02:18,954 --> 00:02:23,185
+Cut the middle by a fifth and watch the slide flatten.
+
+36
+00:02:23,485 --> 00:02:27,715
+That is the whole system, and it fits on one page.
