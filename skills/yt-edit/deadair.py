@@ -17,12 +17,21 @@ runtime you would land on, and you apply it in whatever editor you use. Nothing 
 """
 import argparse, json, os, re, sys
 
-FILLER_ONLY = re.compile(r"^[\s,.\-?!¿¡…]*((um+|uh+|er+|ah+|hmm+|so|okay|ok|right|yeah|like|anyway|"
+FILLER_ONLY = re.compile(r"^[\s,.\-?!¿¡…।]*((um+|uh+|er+|ah+|hmm+|so|okay|ok|right|yeah|like|anyway|"
                          r"basically|actually|you know|i mean|let me see|hold on|"
-                         # spanish - the most requested second language
+                         # spanish
                          r"eh+|este+|bueno|pues|o sea|osea|digamos|a ver|vale|"
-                         r"es decir|d[eé]jame ver|un momento)[\s,.\-?!¿¡…]*)+$", re.I)
+                         r"es decir|d[eé]jame ver|un momento|"
+                         # hindi, romanised and devanagari
+                         r"matlab|toh|haa?n|ach+h?a|dekho|yaa?r|th[ie]e?k hai|chalo|arr?ey|arre|"
+                         r"मतलब|तो|हाँ|हां|अच्छा|देखो|यार|ठीक है|चलो|अरे|"
+                         # nepali, romanised and devanagari
+                         r"ani|ta|ni|la|khai|hai|haina|hoina|ke re|"
+                         r"अनि|त|नि|ल|खै|हैन|होइन|के रे)[\s,.\-?!¿¡…।]*)+$", re.I)
 TAG = re.compile(r"<[^>]*>")
+# [Music], [Applause], (laughs) - caption annotations, never speech. Left in, they become chapter
+# titles and the first line of a Short.
+SOUND = re.compile(r"\[[^\]]*\]|\((?:music|applause|laughter|laughs|inaudible)\)", re.I)
 
 def parse_ts(s):
     s = s.strip().replace(",", ".")
@@ -34,7 +43,8 @@ def load(path):
     if path.endswith(".json"):
         d = json.loads(raw)
         segs = d.get("segments", []) if isinstance(d, dict) else d
-        return [(float(s["start"]), float(s["end"]), (s.get("text") or "").strip()) for s in segs]
+        segs = [(float(s["start"]), float(s["end"]), SOUND.sub("", s.get("text") or "").strip()) for s in segs]
+        return [s for s in segs if s[2]]
     cues, cur = [], None
     for line in raw.splitlines():
         m = re.match(r"\s*(\d[\d:.,]+)\s*-->\s*(\d[\d:.,]+)", line)
@@ -44,7 +54,7 @@ def load(path):
         elif not line.strip():
             cur = None    # a blank line ends the cue, so a vtt NOTE or cue id is never read as speech
         elif cur is not None:
-            text = TAG.sub("", line).strip()
+            text = " ".join(SOUND.sub("", TAG.sub("", line)).split())
             if text: cur[2].append(text)
     # YouTube auto-captions roll: each cue repeats the line before it, and every few seconds there
     # is a 10ms cue that is nothing but the repeat. Keep only the lines that are new. Only for files
