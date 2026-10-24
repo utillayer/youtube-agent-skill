@@ -58,6 +58,21 @@ class DeadAir(unittest.TestCase):
         self.assertTrue(deadair.FILLER_ONLY.match("bueno, o sea..."))
         self.assertFalse(deadair.FILLER_ONLY.match("bueno saber eso"))
 
+    def test_hindi_and_nepali_fillers(self):
+        for s in ("matlab, toh", "अच्छा, तो।", "ठीक है", "ani ta", "khai ke re", "अनि"):
+            self.assertTrue(deadair.FILLER_ONLY.match(s), s)
+        for s in ("are", "matlab kya hai", "मतलब यह है कि", "tomato"):
+            self.assertFalse(deadair.FILLER_ONLY.match(s), s)
+
+    def test_caption_annotations_are_not_speech(self):
+        import tempfile
+        with tempfile.NamedTemporaryFile("w", suffix=".srt", delete=False, encoding="utf-8") as f:
+            f.write("1\n00:00:00,000 --> 00:00:02,000\n[Music]\n\n"
+                    "2\n00:00:02,000 --> 00:00:04,000\n[Applause] thank you all\n")
+        cues = deadair.load(f.name)
+        os.unlink(f.name)
+        self.assertEqual(cues, [(2.0, 4.0, "thank you all")])
+
     def test_overlapping_cuts_counted_once(self):
         cuts = [{"start": 0, "end": 2}, {"start": 1, "end": 3}, {"start": 5, "end": 6}]
         self.assertEqual(deadair.merge(cuts), 4)
@@ -225,6 +240,10 @@ class Shorts(unittest.TestCase):
     def test_question_section_found(self):
         kept = shorts.pick(shorts.candidates(deadair.load(fixture("talk.srt"))), top=5)
         self.assertTrue(any(c["first_line"].startswith("Why do viewers leave") for c in kept))
+
+    def test_unpunctuated_transcript_flagged(self):
+        self.assertTrue(shorts.unpunctuated(deadair.load(fixture("auto.vtt"))))
+        self.assertFalse(shorts.unpunctuated(deadair.load(fixture("talk.srt"))))
 
     def test_cli_rejects_long_max(self):
         code, _, err = run("yt-shorts/shorts.py", "talk.srt", "--max", "300")
