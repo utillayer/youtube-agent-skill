@@ -67,6 +67,11 @@ def candidates(cues, lo=20.0, hi=55.0):
                     "last_line": cues[j][2][-160:], "flags": flags})
     return out
 
+def unpunctuated(cues):
+    """True when almost no cue ends a sentence - auto-captions, where cue breaks fall mid-thought."""
+    ends = sum(1 for c in cues if END.search(c[2]))
+    return ends < max(2, len(cues) * 0.05)
+
 def pick(cands, top=5):
     """Best first, never two that overlap - two Shorts out of the same 40 seconds is one Short."""
     kept = []
@@ -88,8 +93,12 @@ def main():
     cues = load(a.transcript)
     if not cues: print("no cues found - is this an srt, vtt or whisper json?"); sys.exit(1)
     kept = pick(candidates(cues, a.min, a.max), a.top)
-    if a.json: print(json.dumps(kept, indent=1, ensure_ascii=False)); return
+    punctuated = not unpunctuated(cues)
+    if a.json: print(json.dumps({"punctuated": punctuated, "spans": kept}, indent=1, ensure_ascii=False)); return
     print(f"\n  {a.transcript}   {len(cues)} cues, spans of {a.min:.0f}-{a.max:.0f}s\n")
+    if not punctuated:
+        print("  This transcript has no punctuation (YouTube auto-captions do not), so every sentence end")
+        print("  below is a guess from pauses. A whisper transcript punctuates and gives much cleaner cuts.\n")
     for n, c in enumerate(kept, 1):
         print(f"  {n}. {mmss(c['start'])} -> {mmss(c['end'])}   {c['seconds']:.0f}s   score {c['score']}   "
               f"hook {c['hook']} ({c['formula']})")
