@@ -1,7 +1,7 @@
 {
   "name": "youtube-agent-skill",
   "description": "Check a YouTube video before you upload it. Score the opening line, test the title against the thumbnail, turn a raw transcript into a cut list, match retention drop-offs to what you said, pull Shorts out of long videos, and draft chapters that render. Includes scripting, SEO, comment replies, weekly planning, niche research and a channel audit.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "UtilLayer",
     "url": "https://utillayer.com"
