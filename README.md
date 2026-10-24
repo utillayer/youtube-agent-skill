@@ -232,7 +232,9 @@ python3 skills/yt-viral/swipe.py channel.json --min 2.0        # outliers by own
 ```
 
 Transcripts can be `.srt`, `.vtt` (YouTube auto-captions included) or whisper `.json`, in any
-language. `swipe.py` reads `yt-dlp --flat-playlist -J` output as it is. Every tool takes `--json`.
+language. No transcript? `yt-dlp --skip-download --write-auto-subs --sub-format vtt -o transcript <url>`
+fetches YouTube's own. `swipe.py` reads `yt-dlp --flat-playlist -J` output as it is. Every tool
+takes `--json`.
 
 ---
 
@@ -244,10 +246,10 @@ here touches your channel, and nothing logs in as you.
 **Invent a number.** If a skill wants a figure it does not have, it asks you or writes the line
 without it.
 
-**Pretend the score is a prediction.** The hook panel was calibrated on 74 real hooks (top and bottom
-eight by views across five channels). It tells a deliberately bad hook from a real one well, and a
-creator's hits from their own misses barely at all. A low score means look again. A high score is
-not a promise.
+**Pretend the score is a prediction.** The hook panel is a set of hand-set heuristics, not a model
+trained on view counts. It reliably flags the openings that waste the first seconds: the greeting,
+the channel intro, the adjective with nothing behind it. It has not been shown to pick the winner
+between two decent hooks. A low score means look again. A high score is not a promise.
 
 **Sell you tags.** YouTube's own help page says tags "play a minimal role" in discovery, so the SEO
 skill spends one line on them.
@@ -259,7 +261,7 @@ skill tells you to run Studio's built-in A/B test instead of trusting either sco
 **Help you copy.** `/yt-viral` hands you the shape of what worked, never the video. Remaking someone
 else's outlier with the nouns swapped is what YouTube's inauthentic-content policy demonetises.
 
-The word lists behind filler detection and the hook panel are English, with Spanish fillers too.
+The hook panel's word lists are English. Filler detection knows English, Spanish, Hindi and Nepali.
 Other languages get the timing-based checks, and the tools say so instead of guessing.
 
 ---

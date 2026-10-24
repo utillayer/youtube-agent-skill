@@ -12,10 +12,11 @@ that leaks at the dead one, and averaging hides that.
 The word lists (filler, "you", stakes, curiosity) are English. A hook in another language still gets
 SPECIFICITY and BREVITY scored properly; the other three will read low and say nothing useful.
 
-WHAT THIS CAN AND CANNOT TELL YOU. Measured against 74 real short-form hooks (first 15 seconds of
-auto-captions, top-8 and bottom-8 by views across five channels): it separates deliberately bad
-hooks from real ones well, and it separates a creator's own hits from their own misses barely at
-all. Treat a low score as a reason to look again, never a high score as a promise.
+WHAT THIS CAN AND CANNOT TELL YOU. The weights are hand-set heuristics, not a fitted model, and there
+is no published dataset behind them. They reliably mark the openings that waste the first seconds -
+a greeting, a channel intro, an adjective with nothing behind it. They have not been shown to predict
+which of two decent hooks will hold more viewers. Treat a low score as a reason to look again, never
+a high score as a promise.
 """
 import argparse, json, os, re, sys
 
