@@ -1,6 +1,6 @@
 {
   "name": "youtube-agent-skill",
-  "description": "Eleven Claude skills for running a YouTube channel: scripts off 21 hook formulas with a scored hook, title and thumbnail linted as one pairing, an edit decision list from your transcript, a retention reader that finds the moments people leave, a Shorts finder, chapters, search, comments, the weekly plan, a channel audit, and outlier research that ranks your niche by each video's own-channel multiple.",
+  "description": "Check a YouTube video before you upload it. Score the opening line, test the title against the thumbnail, turn a raw transcript into a cut list, match retention drop-offs to what you said, pull Shorts out of long videos, and draft chapters that render. Includes scripting, SEO, comment replies, weekly planning, niche research and a channel audit.",
   "version": "1.0.0",
   "author": {
     "name": "UtilLayer",

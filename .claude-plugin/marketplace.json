@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "youtube-agent-skill",
-      "description": "Eleven Claude skills for running a YouTube channel: scored hooks, title and thumbnail linting, edit decision lists, retention reading, Shorts finding, chapters and outlier research.",
+      "description": "Check a YouTube video before you upload it: hook scoring, title and thumbnail checks, cut lists, retention drop-offs, Shorts and chapters.",
       "source": "./",
       "category": "productivity",
       "homepage": "https://github.com/utillayer/youtube-agent-skill"
