@@ -4,6 +4,7 @@ description: >-
   Write YouTube chapters from a transcript, validated against YouTube's own
   rules so they actually render. Use for "add chapters", "timestamps",
   "break this video into sections".
+allowed-tools: Bash(python3 ${CLAUDE_SKILL_DIR}/chapters.py *)
 ---
 
 # yt-chapters
@@ -16,6 +17,15 @@ The tools live in this skill's folder. `${CLAUDE_SKILL_DIR}` is that folder in C
 it does not expand (claude.ai, Codex), use the folder this SKILL.md was loaded from.
 
 It reads transcripts with `../yt-edit/deadair.py`, so install the two together.
+
+Have a link but no transcript? YouTube's own captions, in one line:
+
+```bash
+yt-dlp --skip-download --write-auto-subs --sub-langs en --sub-format vtt -o transcript "<video url>"
+```
+
+That writes `transcript.en.vtt`. Swap `en` for the video's language. Auto-captions have no
+punctuation; a `whisper` transcript does, and gives cleaner sentence boundaries.
 
 ## Before you write
 

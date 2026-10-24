@@ -5,6 +5,7 @@ description: >-
   actually leave, then say what to change. Use for "why do people stop
   watching", "my retention is bad", a pasted retention chart or CSV, or "fix
   my pacing".
+allowed-tools: Bash(python3 ${CLAUDE_SKILL_DIR}/retention.py *)
 ---
 
 # yt-retention

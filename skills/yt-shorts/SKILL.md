@@ -4,6 +4,7 @@ description: >-
   Find the Shorts hiding inside a long video and write them, using the
   transcript to pick self-contained moments. Use for "cut this into shorts",
   "clip this", "repurpose this video", "what should I clip".
+allowed-tools: Bash(python3 ${CLAUDE_SKILL_DIR}/shorts.py *) Bash(python3 ${CLAUDE_SKILL_DIR}/../yt-script/hookscore.py *)
 ---
 
 # yt-shorts
@@ -20,6 +21,15 @@ The tools live in this skill's folder. `${CLAUDE_SKILL_DIR}` is that folder in C
 it does not expand (claude.ai, Codex), use the folder this SKILL.md was loaded from.
 
 It uses `../yt-edit/deadair.py` and `../yt-script/hookscore.py`, so install all three together.
+
+Have a link but no transcript? YouTube's own captions, in one line:
+
+```bash
+yt-dlp --skip-download --write-auto-subs --sub-langs en --sub-format vtt -o transcript "<video url>"
+```
+
+That writes `transcript.en.vtt`. Swap `en` for the video's language. Auto-captions have no
+punctuation; a `whisper` transcript does, and gives cleaner sentence boundaries.
 
 ## Before you write
 

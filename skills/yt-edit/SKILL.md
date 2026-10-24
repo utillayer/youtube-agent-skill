@@ -5,6 +5,7 @@ description: >-
   filler cues and retakes, with timecodes. Use for "edit this", "cut the
   dead space", "tighten this video", "I rambled", or any request to shorten
   footage from a transcript.
+allowed-tools: Bash(python3 ${CLAUDE_SKILL_DIR}/deadair.py *)
 ---
 
 # yt-edit
@@ -21,15 +22,26 @@ it does not expand (claude.ai, Codex), use the folder this SKILL.md was loaded f
 
 No transcript yet? Ask for one, or produce one first - `whisper`, `faster-whisper`, or the caption
 track YouTube generates on an unlisted upload all work. YouTube's auto-caption `.vtt` can go in as it
-is: the inline word timings and the rolling repeated lines are stripped on load. Do not guess at
-timings.
+is: the inline word timings, the rolling repeated lines and `[Music]`-style annotations are stripped
+on load. Do not guess at timings.
+
+Have a link but no transcript? YouTube's own captions, in one line:
+
+```bash
+yt-dlp --skip-download --write-auto-subs --sub-langs en --sub-format vtt -o transcript "<video url>"
+```
+
+That writes `transcript.en.vtt`. Swap `en` for the video's language. Auto-captions have no
+punctuation; a `whisper` transcript does, and gives cleaner sentence boundaries.
+
 
 ## What it finds
 
 - **DEAD** - gaps longer than the floor, trimmed from the MIDDLE so both sides keep a breath.
   Cutting flush against speech is what makes a tightened take sound gasping.
-- **FILLER** - cues that are nothing but "um", "so yeah", "basically" (and the Spanish "bueno",
-  "o sea", "este"). Other languages get DEAD and REPEAT but no filler list - say so.
+- **FILLER** - cues that are nothing but "um", "so yeah", "basically" plus Spanish ("bueno", "o sea"),
+  Hindi ("matlab", "accha", "मतलब") and Nepali ("ani", "khai", "अनि"). Other languages get DEAD and
+  REPEAT but no filler list - say so.
 - **REPEAT** - a sentence restarted. Compared against the last cue that was actually speech, not
   the literal previous cue, because most retakes have an "um" between the two attempts. The
   abandoned take is the one cut, and it is usually the shorter of the two.
