@@ -1,30 +1,30 @@
 # youtube-agent-skill
 
-**Eleven Claude skills for the parts of YouTube that decide whether anyone watches.**
-Hooks, titles, thumbnails, the edit, retention, Shorts, chapters, search. Free, MIT, no signup, no
-API key, nothing to connect.
+**Twelve Claude skills for the parts of YouTube that decide whether anyone watches** - the research,
+the script, the opening, the title and thumbnail, the edit, retention, Shorts, chapters and search.
+Free, MIT, no account, no API key, nothing to connect.
 
 [![test](https://github.com/utillayer/youtube-agent-skill/actions/workflows/test.yml/badge.svg)](https://github.com/utillayer/youtube-agent-skill/actions/workflows/test.yml)
 ![python](https://img.shields.io/badge/python-3.8%2B-3776ab)
 ![dependencies](https://img.shields.io/badge/dependencies-none-success)
 ![license](https://img.shields.io/badge/license-MIT-blue)
 
-Most AI writing help for YouTube is a prompt with opinions. This pack ships seven small Python tools
-that actually measure things: they score your hook before you record it, lint your title against
-your thumbnail, read your retention export down to the second, and turn a raw transcript into a cut
-list. Claude does the writing. The tools keep it honest.
+Most AI help for YouTube is a prompt with opinions. This pack comes with nine small Python tools that
+measure instead: they score an opening line before you record it, check a title against its
+thumbnail, find the second your viewers left, turn a raw transcript into a cut list, and check a
+script is ready to be spoken. Claude writes; the tools keep it honest.
 
 ```text
-> /yt-script a video about why small channels stall at 30 seconds
+> /yt-script a video about why small channels stall at thirty seconds
 ```
 
 ---
 
-## See it work
+## What it looks like
 
-### Your hook, scored before you waste a take on it
+### An opening line, scored before you record it
 
-Every channel's default opening, and one written off the pack's [21 hook formulas](skills/yt-script/hooks.json):
+A typical channel opening, and one written from the pack's [21 hook formulas](skills/yt-script/hooks.json):
 
 ```text
   Hey guys, welcome back to the channel, today is going to be amazing.
@@ -46,10 +46,10 @@ Every channel's default opening, and one written off the pack's [21 hook formula
     formula      The Question  (2 patterns matched)
 ```
 
-The verdict is 60% the average and 40% the weakest property, on purpose. A hook with one dead
-property leaks at that property, and an average would hide it.
+The verdict is 60% the average and 40% the weakest score. One dead property is where people leave,
+and an average would hide it.
 
-### Your title and thumbnail, linted as one unit
+### A title and its thumbnail, checked together
 
 ```text
   "The ULTIMATE Guide To Growing Your Channel FAST In 2026 (Insane Results)"   +  thumbnail "GROW YOUR CHANNEL FAST"
@@ -67,7 +67,7 @@ property leaks at that property, and an average would hide it.
     ok              thumbnail and title carry different words
 ```
 
-### Your raw recording, as a cut list
+### A raw recording, as a cut list
 
 ```text
   talk.srt   147.72s in, 36 cues, dead-air floor 0.45s
@@ -80,11 +80,26 @@ property leaks at that property, and an average would hide it.
   10 cuts, 9.94s removed, 137.77s out (6.7% shorter)
 ```
 
-Dead air is trimmed from the middle so both sides keep a breath. The abandoned take is the one cut,
-even with an "um" between the two attempts. It works on YouTube's own auto-captions as they come.
+Silences are trimmed from the middle so both sides keep a breath, and the abandoned take is the one
+cut, even with an "um" between the tries. YouTube's own auto-captions work as they come.
 
 <details>
-<summary><b>Your retention graph, read down to the second</b></summary>
+<summary><b>A script checked before anyone records it</b></summary>
+
+```text
+  script.json: 999 words, 18 paragraphs, 1 errors, 1 warnings
+
+    x  opening scores 59 on hookscore.py (need 60): 'You know Vibhishana as the brother who betrayed Ravana. But before he '
+    !  paragraph 11: 'King' is capitalised but not in names
+```
+
+Length, one breath per paragraph, nothing a narrator trips on (digits, dashes, brackets), sentences
+that end, the opening's score, names spelled one way, a turn at the middle.
+
+</details>
+
+<details>
+<summary><b>The moment viewers left, to the second</b></summary>
 
 ```text
   retention.csv   101 points   100.0% -> 28.0%
@@ -100,27 +115,26 @@ even with an "um" between the two attempts. It works on YouTube's own auto-capti
               a flat slide is pacing, not content. Cut the middle, do not rewrite it.
 ```
 
-Pass the transcript and every cliff comes with what you were saying when people left.
+Give it the transcript and each drop comes with what was being said.
 
 </details>
 
 <details>
-<summary><b>The Shorts already hiding in a long video</b></summary>
+<summary><b>The Shorts already inside a long video</b></summary>
 
 ```text
-  3. 1:19 -> 1:55   35s   score 75   hook 44 (The Question)
+  3. 1:19 -> 1:55   35s   score 79   hook 54 (The Question)
        first  "Why do viewers leave your videos at thirty seconds?"
        last   "And show them the payoff exists before the minute mark."
 ```
 
-Spans that open on a fresh thought, close on a finished sentence and never overlap. Claude then
-writes each a new first line, because the long video's opening assumes context a Shorts viewer
-does not have.
+Spans that start on a fresh thought, end on a finished sentence and never overlap. Claude then writes
+each a new first line, because the long video's opening relies on context a Shorts viewer never saw.
 
 </details>
 
 <details>
-<summary><b>Chapters YouTube will actually render</b></summary>
+<summary><b>Chapters that YouTube will actually show</b></summary>
 
 ```text
   00:00 Before Change Channels
@@ -130,85 +144,84 @@ does not have.
   01:57 Cliff Middle Retention
 ```
 
-Boundaries come from the pauses you took and the vocabulary shift across them, checked against
-YouTube's rules (00:00 first, three or more, ten seconds each, ascending). The titles are drafts;
+Boundaries come from the pauses taken and the change of vocabulary across them, checked against
+YouTube's rules (00:00 first, at least three, ten seconds each, in order). The titles are drafts;
 Claude rewrites them in your voice.
 
 </details>
 
 ---
 
-## The eleven, in the order you need them
+## The twelve, in the order you use them
 
 **Before you record**
 
 | | |
 | --- | --- |
-| `/yt-plan` | A week that fits the hours you actually have. One anchor video, one cheap one, three Shorts cut from the anchor. |
-| `/yt-viral` | What is working in your niche, ranked by how far each video beat **its own channel's** median, not by raw views. |
-| `/yt-script` | One idea into a script: five hooks, scored, the best two kept, then every beat with what is on screen. |
-| `/yt-package` | Ten titles linted, the top three shown with their issues, and a thumbnail brief for the winner. |
+| `/yt-plan` | A week that fits the hours you really have: one main video, one quick one, Shorts cut from the main one. |
+| `/yt-viral` | What's working in your niche, ranked against **each channel's own** normal views, not raw counts. |
+| `/yt-research` | For anything that retells a source: a cited brief of what the source says, then an independent fact check of the script. |
+| `/yt-script` | Five openings scored, the best kept, then a script written for the ear, with what's on screen, checked before recording. |
+| `/yt-package` | Ten titles checked, the best three shown with their issues, and a thumbnail plan for the winner. |
 
 **After you record**
 
 | | |
 | --- | --- |
-| `/yt-edit` | The transcript into an edit decision list: dead air, filler, retakes, timecodes, the runtime you land on. |
-| `/yt-shorts` | The self-contained moments, ranked, each with a new first line, on-screen text and a loop point. |
-| `/yt-chapters` | Chapters drafted from the transcript and validated so they render. |
-| `/yt-seo` | The two description lines that show above "...more", tags only where they disambiguate, and the three searches this should win. |
+| `/yt-edit` | The transcript as a cut list: silences, filler and false starts, with timecodes and the length you'll end up with. |
+| `/yt-shorts` | The moments that stand on their own, ranked, each with a new first line, on-screen text and a loop. |
+| `/yt-chapters` | Chapters drafted from the transcript and checked so they appear. |
+| `/yt-seo` | The two description lines people see, tags only where they help, and the three searches this should win. |
 
 **After you publish**
 
 | | |
 | --- | --- |
-| `/yt-comment` | The comment section sorted into questions, corrections, praise and bait, replies in your voice, and the one to pin. |
-| `/yt-retention` | Hook leak, cliffs and slide from your Studio export, and the single change that matters most. |
+| `/yt-comment` | Comments sorted into questions, corrections, praise and bait; short replies in your voice; the one to pin. |
+| `/yt-retention` | The opening loss, the drops and the slide from your Studio export, and the one change that matters most. |
 | `/yt-audit` | The whole channel, ending in **one** fix rather than twenty. |
 
 ---
 
 ## Quick start
 
-**1. Install** into Claude Code:
+**1. Install** in Claude Code:
 
 ```text
 /plugin marketplace add utillayer/youtube-agent-skill
 /plugin install youtube-agent-skill@utillayer
 ```
 
-**2. Give it your voice.** Copy [`templates/voice.md`](templates/voice.md) to
+**2. Tell it how you sound.** Copy [`templates/voice.md`](templates/voice.md) to
 `~/.claude/youtube/voice.md` and fill it in, or send Claude three of your videos and say *"write my
-voice.md from these"*. Every skill reads it. On YouTube you say the words out loud, so a script in
-someone else's voice is unreadable on camera.
+voice.md from these"*. Every skill reads it before writing.
 
-**3. Ask for something.**
+**3. Ask.**
 
 ```text
 > /yt-script a beginner's guide to home espresso, 8 minutes
+> /yt-research what does the original text say about the golden deer?
 > /yt-edit ~/Downloads/raw-take.srt
 > /yt-retention ~/Downloads/retention.csv, the video is 9:42
-> /yt-package I need a title for the espresso video
 ```
 
 <details>
 <summary><b>Other ways to install: by hand, claude.ai, Codex</b></summary>
 
-**By hand, in Claude Code.** Copy all the folders, not one: `/yt-chapters`, `/yt-retention`,
-`/yt-shorts`, `/yt-viral` and `/yt-audit` borrow tools from their neighbours.
+**By hand in Claude Code.** Copy all the folders, not just one - several skills use their
+neighbours' tools.
 
 ```bash
 git clone https://github.com/utillayer/youtube-agent-skill.git
-cp -r youtube-agent-skill/skills/yt-* ~/.claude/skills/        # or your repo's .claude/skills/
+cp -r youtube-agent-skill/skills/yt-* ~/.claude/skills/        # or your project's .claude/skills/
 ```
 
-Or paste the repo URL into Claude Code with *"install this skill, then confirm /yt-script works"*.
-If the `/yt-` commands do not show up, start a new session.
+If the `/yt-` commands don't appear, start a new session.
 
 **claude.ai (web and desktop).** Turn on code execution (Settings > Capabilities), zip each skill
 folder (the zip holds the folder, not loose files) and upload it under Customize > Skills. Upload
-the neighbours too: `yt-shorts` needs `yt-edit` and `yt-script` beside it. Pasting a single
-`SKILL.md` into a chat also works as a mode, without the tools.
+the neighbours too: `yt-shorts` needs `yt-edit` and `yt-script` beside it. Pasting one `SKILL.md`
+into a chat also works, without the tools.
 
 **Codex and other agents.** The skills are plain `SKILL.md` folders. Copy the `yt-*` folders into
 `~/.agents/skills/` (or `.agents/skills/` in a project).
@@ -217,49 +230,51 @@ the neighbours too: `yt-shorts` needs `yt-edit` and `yt-script` beside it. Pasti
 
 ---
 
-## The seven tools
+## The nine tools
 
-Plain Python 3.8+, standard library only. Use them without Claude if you like.
+Plain Python 3.8+, standard library only. They work without Claude too.
 
 ```bash
-python3 skills/yt-script/hookscore.py --hook "one line"        # 5-property hook panel
-python3 skills/yt-package/title.py --title "..." --thumb "..." # title + thumbnail linter
-python3 skills/yt-edit/deadair.py transcript.srt               # edit decision list
-python3 skills/yt-chapters/chapters.py transcript.srt          # validated chapters
-python3 skills/yt-retention/retention.py retention.csv         # where they left, and why
-python3 skills/yt-shorts/shorts.py transcript.srt              # spans that stand alone as Shorts
-python3 skills/yt-viral/swipe.py channel.json --min 2.0        # outliers by own-channel multiple
+python3 skills/yt-script/hookscore.py --hook "one line"         # score an opening
+python3 skills/yt-script/scriptcheck.py script.json             # is a script ready to be spoken?
+python3 skills/yt-package/title.py --title "..." --thumb "..."  # title + thumbnail check
+python3 skills/yt-research/sourcekit.py find source.txt "..."   # where a source says it, with line numbers
+python3 skills/yt-edit/deadair.py transcript.srt                # cut list
+python3 skills/yt-chapters/chapters.py transcript.srt           # chapters that YouTube accepts
+python3 skills/yt-retention/retention.py retention.csv          # where they left, and why
+python3 skills/yt-shorts/shorts.py transcript.srt               # moments that stand alone as Shorts
+python3 skills/yt-viral/swipe.py channel.json --min 2.0         # outliers against each channel's own median
 ```
 
 Transcripts can be `.srt`, `.vtt` (YouTube auto-captions included) or whisper `.json`, in any
 language. No transcript? `yt-dlp --skip-download --write-auto-subs --sub-format vtt -o transcript <url>`
-fetches YouTube's own. `swipe.py` reads `yt-dlp --flat-playlist -J` output as it is. Every tool
+fetches YouTube's own. `swipe.py` reads `yt-dlp --flat-playlist -J` output directly. Every tool
 takes `--json`.
 
 ---
 
-## What it will not do
+## What it won't do
 
-**Publish.** Every skill ends in a block you copy and one question: *ship it, or change it?* Nothing
-here touches your channel, and nothing logs in as you.
+**Publish.** Every skill ends with something to copy and one question: *post it as is, or another
+pass?* Nothing here touches your channel or logs in as you.
 
-**Invent a number.** If a skill wants a figure it does not have, it asks you or writes the line
-without it.
+**Invent.** No made-up numbers, results or quotes. If a line needs a figure it doesn't have, it
+asks or leaves the figure out. For retellings, `/yt-research` holds the script to its source.
 
-**Pretend the score is a prediction.** The hook panel is a set of hand-set heuristics, not a model
-trained on view counts. It reliably flags the openings that waste the first seconds: the greeting,
-the channel intro, the adjective with nothing behind it. It has not been shown to pick the winner
-between two decent hooks. A low score means look again. A high score is not a promise.
+**Pretend the scores predict views.** The hook panel is hand-set rules, not a model trained on
+views. It reliably flags openings that waste the first seconds - the greeting, the channel intro,
+the adjective with nothing behind it - but it hasn't been shown to pick the winner between two good
+ones. A low score means look again. A high score is not a promise.
 
-**Sell you tags.** YouTube's own help page says tags "play a minimal role" in discovery, so the SEO
-skill spends one line on them.
+**Sell you tags.** YouTube's help page says tags "play a minimal role" in discovery, so the SEO skill
+gives them one line.
 
-**Treat folk numbers as rules.** The 60 and 40 character title limits are what survives on screen,
-not anything YouTube publishes, and the linter says so. When two titles are close, the package
-skill tells you to run Studio's built-in A/B test instead of trusting either score.
+**Treat rules of thumb as rules.** The 60 and 40 character title limits are what tends to fit, not
+published numbers, and the checker says so. When two titles are close, `/yt-package` points you to
+Studio's own A/B test rather than trusting either score.
 
-**Help you copy.** `/yt-viral` hands you the shape of what worked, never the video. Remaking someone
-else's outlier with the nouns swapped is what YouTube's inauthentic-content policy demonetises.
+**Help you copy.** `/yt-viral` gives you the shape of what worked, never the video. Remaking someone
+else's outlier with the names changed is what YouTube's inauthentic-content policy demonetises.
 
 The hook panel's word lists are English. Filler detection knows English, Spanish, Hindi and Nepali.
 Other languages get the timing-based checks, and the tools say so instead of guessing.
@@ -268,8 +283,8 @@ Other languages get the timing-based checks, and the tools say so instead of gue
 
 ## Contributing
 
-Bugs and ideas go in [issues](https://github.com/utillayer/youtube-agent-skill/issues). Before a pull
-request, run the suite; it takes under a second:
+Bugs and ideas go in [issues](https://github.com/utillayer/youtube-agent-skill/issues). Run the tests
+before a pull request; they take under a second:
 
 ```bash
 python3 -m unittest discover -s tests -v
@@ -277,4 +292,4 @@ python3 -m unittest discover -s tests -v
 
 ## Licence
 
-MIT. Use it, change it, ship it.
+MIT.
