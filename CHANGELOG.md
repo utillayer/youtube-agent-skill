@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.2.0
+
+- New skill, `/yt-research`: research a video from its primary source. A cited brief (events in
+  order with section and line numbers, quotes, a careful list of later additions and ambiguities),
+  then an independent fact check of the script by an agent that never saw the writing.
+- New tool, `sourcekit.py`: index any plain-text source into its books and chapters, find a phrase
+  with the line it starts on, and print a section (`"Book III > Canto XLV"`) or a line range.
+- New tool, `scriptcheck.py`: checks a script is ready to be spoken - length, one breath per
+  paragraph, no characters a narrator trips on, sentences that end, the opening's score, names
+  spelled one way, a turn at the middle.
+- `/yt-script` rewritten around writing for the ear: paragraphs as breath-groups, numbers as words,
+  every paragraph something to show, a turn at the midpoint, and a check before recording.
+- `hookscore.py` counts numbers written as words ("ten seconds") as concrete, so a spoken script is
+  not penalised for following the rules.
+- Every skill, the README, the voice template and the hook formulas rewritten in the pack's own words.
+
 ## 1.1.0
 
 - Filler detection now knows Hindi and Nepali, romanised and Devanagari, next to English and Spanish.
