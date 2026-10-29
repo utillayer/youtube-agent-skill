@@ -7,10 +7,10 @@ import json, os, subprocess, sys, unittest
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SKILLS = os.path.join(ROOT, "skills")
 FIX = os.path.join(ROOT, "tests", "fixtures")
-for d in ("yt-edit", "yt-script", "yt-package", "yt-chapters", "yt-retention", "yt-viral", "yt-shorts"):
+for d in ("yt-edit", "yt-script", "yt-package", "yt-chapters", "yt-retention", "yt-viral", "yt-shorts", "yt-research"):
     sys.path.insert(0, os.path.join(SKILLS, d))
 
-import deadair, hookscore, title, chapters, retention, swipe, shorts  # noqa: E402
+import deadair, hookscore, title, chapters, retention, swipe, shorts, sourcekit, scriptcheck  # noqa: E402
 
 def run(tool, *args):
     """Run a tool the way a skill does: from somewhere else, by path."""
@@ -248,6 +248,75 @@ class Shorts(unittest.TestCase):
     def test_cli_rejects_long_max(self):
         code, _, err = run("yt-shorts/shorts.py", "talk.srt", "--max", "300")
         self.assertNotEqual(code, 0)
+
+
+SOURCE = """THE TALE
+
+BOOK I.
+Canto I. The Start.
+Canto II. The Middle.
+
+BOOK I.
+
+Canto I. The Start.
+
+The prince went out at dawn
+and found a golden deer
+beside the river.
+
+Canto II. The Middle.
+
+The deer ran into the deep forest.
+
+BOOK II.
+
+Canto I. The End.
+
+He came home at night.
+"""
+
+class SourceKit(unittest.TestCase):
+    def setUp(self):
+        import tempfile
+        self.path = os.path.join(tempfile.mkdtemp(), "tale.txt")
+        with open(self.path, "w") as fh: fh.write(SOURCE)
+
+    def test_sections_skip_the_contents(self):
+        heads = sourcekit.index(sourcekit.read(self.path))
+        titles = [(h["level"], h["title"]) for h in heads]
+        self.assertEqual(titles, [(0, "BOOK I."), (1, "Canto I. The Start."), (1, "Canto II. The Middle."), (0, "BOOK II."), (1, "Canto I. The End.")])
+        self.assertEqual(heads[1]["end"], heads[2]["start"] - 1)
+
+    def test_find_reports_the_starting_line(self):
+        hits = sourcekit.find(self.path, "golden deer")
+        self.assertEqual(len(hits), 1)
+        self.assertEqual(sourcekit.read(self.path)[hits[0]["line"] - 1], "and found a golden deer")
+        self.assertIn("Canto I. The Start.", hits[0]["section"])
+        self.assertEqual(len(sourcekit.find(self.path, "deer beside the")), 1)   # across a line wrap
+
+    def test_show_a_section_in_a_book(self):
+        out = sourcekit.show(self.path, "Book II > Canto I")
+        self.assertTrue(any("came home" in l for l in out))
+        self.assertFalse(any("golden deer" in l for l in out))
+
+
+class ScriptCheck(unittest.TestCase):
+    PARA = ("The river was wide and the night was cold, and the prince stood at the edge of the water "
+            "with nothing but his bow and the stars above him, waiting for the boat that would carry him home again.")
+    def text(self, paras): return "\n\n".join(paras)
+
+    def test_clean_script_passes(self):
+        hook = "Why do you lose half your viewers in the first ten seconds, when the topic is fine? " + self.PARA
+        mid = "But then the boat did not come, and he asked himself why the river was empty that night of all nights."
+        r = scriptcheck.check(self.text([hook] + [self.PARA] * 3 + [mid + " " + self.PARA[:60] + "."] + [self.PARA] * 3), names=[], sources=["x"], lo=100, hi=2000)
+        self.assertEqual(r["errors"], [])
+
+    def test_errors(self):
+        r = scriptcheck.check(self.text(["Hello everyone, welcome back to the channel today.", "In 1999 we went; it was (sort of) fine - really"]), lo=750, hi=1500)
+        e = " ".join(r["errors"])
+        for want in ("length", "paragraph 0", "paragraph 1", "ends mid-sentence", "opening scores"):
+            self.assertIn(want, e)
+        self.assertIn("1", e)
 
 
 class Skills(unittest.TestCase):
