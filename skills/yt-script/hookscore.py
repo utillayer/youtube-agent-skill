@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""hookscore.py - score a YouTube hook before you waste a take on it.
+"""hookscore.py - score an opening line before you record it.
 
-Five properties, 0-100 each, and a verdict that is 60% the mean and 40% the weakest one. The
-weakest-link weighting is deliberate: a hook with four strong properties and one dead one is a hook
-that leaks at the dead one, and averaging hides that.
+Five properties, each 0-100, and a verdict made of 60% their average and 40% the weakest. The weakest
+one counts extra on purpose: an opening with one dead property loses people at exactly that point,
+and an average would hide it.
 
     python3 hookscore.py hooks.txt            # one hook per line, ranked
     python3 hookscore.py --hook "one line"    # score a single hook
@@ -30,6 +30,10 @@ VAGUE = {"amazing","incredible","insane","crazy","huge","massive","game","change
 # A figure, with its unit when it has one: 97%, $500, 3x, 10k, 30 days. The unit sits inside the
 # match so "97%" and "$500" count as the concrete thing they are, not as a bare 97 or 500.
 CONCRETE = re.compile(r"(?<![\w$])[$£€]?\d[\d,.]*(\s?(%|k\b|m\b|x\b|h\b|(second|minute|hour|day|week|month|year)s?\b))?", re.I)
+# Numbers written as words count too: a spoken script writes "ten seconds", not "10 seconds".
+SPELLED = re.compile(r"\b(two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|"
+                     r"seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand|"
+                     r"million|billion|half|dozen)\b", re.I)
 YOU = re.compile(r"\b(you|your|you're|youre|yourself)\b", re.I)
 STAKE = re.compile(r"\b(lose|lost|wasting|waste|quit|fail|broke|cost|risk|before|stop|never|die|dying|dead)\b", re.I)
 CURIOSITY = re.compile(r"\b(why|how|what|which|until|before|but|nobody|almost|except|reason|actually)\b", re.I)
@@ -39,7 +43,7 @@ def words(t): return re.findall(r"[^\W_]+(?:['’.%][^\W_]+)*%?|[$£€]\d[\d,.]
 def specificity(t):
     w = words(t)
     if not w: return 0
-    nums = len(CONCRETE.findall(t))
+    nums = len(CONCRETE.findall(t)) + len(SPELLED.findall(t))
     vague = sum(1 for x in w if x in VAGUE)
     filler = sum(1 for x in w if x in FILLER)
     s = 34 + nums * 22 - vague * 16 - filler * 5
@@ -54,7 +58,7 @@ def address(t):
 
 def stakes(t):
     n = len(STAKE.findall(t))
-    return max(0, min(100, 22 + n * 26 + (14 if CONCRETE.search(t) else 0)))
+    return max(0, min(100, 22 + n * 26 + (14 if CONCRETE.search(t) or SPELLED.search(t) else 0)))
 
 def curiosity(t):
     n = len(CURIOSITY.findall(t))

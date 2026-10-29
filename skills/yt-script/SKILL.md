@@ -1,65 +1,75 @@
 ---
 name: yt-script
 description: >-
-  Write a YouTube video script from a raw idea - hook options off 21
-  formulas, scored, then the full spoken script with the retention beats
-  marked. Use whenever the user wants a video script, a hook, an opening
-  line, "what should I say", "write my next video", or is about to record
-  and does not have the first fifteen seconds yet.
-allowed-tools: Bash(python3 ${CLAUDE_SKILL_DIR}/hookscore.py *)
+  Turn a video idea into a script meant to be spoken: five hooks scored against
+  21 formulas, the best opening kept, then the narration paragraph by paragraph
+  with what is on screen, checked before anyone records. Use for "write my
+  script", "write my next video", "I need a hook", "how should I open this",
+  "what do I say", or any time someone is about to record without a first line.
+allowed-tools: Bash(python3 ${CLAUDE_SKILL_DIR}/hookscore.py *) Bash(python3 ${CLAUDE_SKILL_DIR}/scriptcheck.py *)
 ---
 
 # yt-script
 
-One idea into a script somebody finishes.
-
-The scorer and the formulas live in this folder and both actually run. Use them. Do not eyeball the hook.
+The script is the video. Everything after it - voice, edit, thumbnail - can only lose what the
+words did not earn. Two tools here keep the writing honest:
 
 ```bash
-python3 ${CLAUDE_SKILL_DIR}/hookscore.py hooks.txt              # rank your hook options
-python3 ${CLAUDE_SKILL_DIR}/hookscore.py --hook "one line"      # score a single one
+python3 ${CLAUDE_SKILL_DIR}/hookscore.py hooks.txt       # score and rank opening lines
+python3 ${CLAUDE_SKILL_DIR}/scriptcheck.py script.json   # is it ready to be spoken?
 ```
 
 The tools live in this skill's folder. `${CLAUDE_SKILL_DIR}` is that folder in Claude Code; anywhere
 it does not expand (claude.ai, Codex), use the folder this SKILL.md was loaded from.
 
-The scorer's word lists are English. For a script in another language, SPECIFICITY and BREVITY still
-mean something; treat the other three as blank and judge them yourself, and say that you did.
+## Before you start
 
-## Before you write
+1. Read `~/.claude/youtube/voice.md` if it exists: who the viewer is, how the creator talks, the
+   words they never use, the claims they will not make. If it is missing, ask for three of their
+   videos, work out the voice, and write the file. Words in someone else's voice cannot be read
+   aloud convincingly.
+2. If the video retells a book, a record or history, run `/yt-research` first and write from its
+   brief. Nothing goes in the script that is not in the brief.
+3. Never make up a number, a result or a quote. If a line needs a figure you do not have, ask for
+   it or cut the figure.
 
-1. Read `~/.claude/youtube/voice.md` if it exists. That is the user's voice profile: how they talk
-   on camera, the words they never use, who they are talking to, what they will not claim. If it
-   does not exist, ask for **three of their own videos**, read or transcribe them, infer the voice,
-   and write the file. A script in the wrong voice is worse than no script, because they have to
-   read it out loud.
-2. Never invent a number, a result or a source. If a figure would strengthen it and you do not have
-   one, ask for it or write the line without it.
+## The opening
 
-## The shape
+The first fifteen seconds decide the video. They must keep the title's promise, open a question the
+viewer cannot answer yet, and show the answer is coming.
 
-**The first 15 seconds is the whole job.** It does three things or the video leaks: confirm the
-click the title promised, open a question the viewer cannot close, and prove the payoff exists.
+Write **five** openings against [the 21 formulas](hooks.json), score them with `hookscore.py`, and
+show the best two with their scores. Pick the more accurate one if they are close: a hook the video
+does not deliver is worse than a weaker one it does. No channel intro, no "before we start", no
+subscribe request - those are where the early drop comes from.
 
-1. **Hook.** Write FIVE against [the 21 formulas](hooks.json), run them through `hookscore.py`,
-   keep the top two, and show the user both with their scores. Never hand over one hook.
-2. **The turn** (0:15-0:45). Say what the video is going to do, in one sentence, and start doing it.
-   No channel intro, no "before we get started", no subscribe pitch. Those are the single most
-   common cause of the 0:30 cliff.
-3. **The body.** One idea per beat. Mark each beat with what is ON SCREEN, not just what is said -
-   a talking head with nothing to look at is a podcast.
-4. **The payoff.** Deliver the thing the hook promised, explicitly, and say that you are delivering
-   it: "that is the prompt, it is in the description".
-5. **The close.** One ask. Not three.
+## The body
+
+- **One idea per paragraph**, 30-75 words: one breath for a person, one take for a voice model.
+- **Written for the ear.** Short sentences. Numbers as words. No dashes, brackets, semicolons or
+  double quotes - they trip narrators and break captions.
+- **Write pictures.** Every paragraph gives the screen something to show: a place, an action, a
+  face. Mark it: `[ON SCREEN: ...]`. A paragraph that is only an idea becomes a slideshow.
+- **Turn at the middle.** Around 45% in, a question or a reversal that resets attention. Retention
+  graphs sag there; give them a reason not to.
+- **Pay off the opening**, explicitly, and say you are doing it.
+- **Close with one line.** One ask at most.
+
+## The check
+
+Put the narration in `script.json` - `{"title", "names", "text", "sources"}`, paragraphs separated by
+blank lines, every proper name in `names` - and run `scriptcheck.py`. Fix every error before
+recording; read every warning. For a sourced video, the independent fact check in `/yt-research`
+comes next.
 
 ## What to hand back
 
-- the two best hooks with their scored panels
-- the script, beat by beat, with `[ON SCREEN: ...]` on every beat
-- the runtime estimate at 150 words per minute
-- one line naming which formula the winning hook used and why it fits this idea
+- the two best openings with their scores, and which formula each uses
+- the script, paragraph by paragraph, with `[ON SCREEN: ...]`
+- the `scriptcheck.py` result
+- the runtime at about 150 words a minute
 
-## The gate
+## Before you hand it over
 
-Nothing here publishes. This skill writes and you publish. Every output ends in a block the user
-copies, and the last line of every run is the question: **ship it, or change it?**
+This skill drafts; you publish. End with the copy-ready block and one question: **post it as is,
+or another pass?**
