@@ -1,33 +1,35 @@
 # voice.md
 
-Copy this to `~/.claude/youtube/voice.md` and fill it in. Every skill in this pack reads it. Ten
-minutes here is worth more than any prompt you will ever write, because on YouTube you have to say
-the words out loud and a script in the wrong voice is unreadable on camera.
+Copy this to `~/.claude/youtube/voice.md` and fill it in. Every skill reads it before writing a word.
+Ten minutes here does more than any prompt, because a video is spoken: words that are not yours
+sound wrong the moment they are read aloud.
 
-## Who I am talking to
+Short on time? Send Claude three of your videos and say "write my voice.md from these".
 
-One person. Name them properly - not "creators", but "someone with under a thousand subs who has
-made nine videos and cannot work out why none of them break 400 views".
+## The one viewer
 
-## How I actually talk
+Describe a single person, not an audience. Not "creators" - "someone with under a thousand
+subscribers, nine videos in, who can't work out why none of them pass 400 views".
 
-Paste the transcript of your best-performing video here, or three of them. Not what you wish you
-sounded like.
+## How I actually sound
 
-## Words I never use
+Paste the transcript of your best video, or two or three. How you really talk, not how you wish
+you did.
 
-The ones that are not mine. Be specific: "unlock", "game-changer", "dive in", "let's get into it".
+## Words that aren't mine
 
-## Words I do use
+Be specific: "unlock", "game-changer", "dive in", "without further ado".
 
-Your tics. The phrases that are yours. Keep them.
+## Words that are
 
-## What I will not claim
+Your phrases, your habits, the things you say that nobody else does. Keep them.
 
-Numbers I cannot show, results that are not mine, tools I have not used. Write them down so the
-skills refuse them for you instead of you catching it in the edit.
+## What I won't claim
 
-## My format
+Numbers I can't show, results that aren't mine, tools I haven't used, sources I haven't read.
+Listed here, the skills refuse them for you.
 
-Length, how a video opens, whether there is an intro, whether you swear, whether you appear on
-camera, what the desk looks like.
+## How my videos look
+
+Length, how they open, whether there's an intro, language and swearing, whether you're on camera
+or it's narration over visuals, and anything a writer should never ask you to do.

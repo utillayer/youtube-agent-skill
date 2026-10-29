@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
-"""title.py - lint a YouTube title and thumbnail pairing before you publish it.
+"""title.py - check a title and its thumbnail text together before the video goes live.
 
-    python3 title.py --title "..." --thumb "AI RAN IT"
+    python3 title.py --title "..." --thumb "THREE WORDS"
     python3 title.py titles.txt            # one per line, ranked
     python3 title.py --title "..." --json
 
-The pairing is the unit, not the title. A title that repeats the thumbnail text wastes half the
-click surface, and that is the single most common mistake this checks for.
+The viewer reads both in one glance, so they are checked as a pair. The most common waste it catches
+is a thumbnail that repeats the title, which spends two surfaces on one message.
 
-Length: YouTube truncates around 60 characters on desktop search and around 40 on a mobile home
-feed. Both limits are reported because they are different failures - a desktop truncation loses the
-tail, a mobile one can lose the subject.
+Length is reported twice because the two cuts fail differently: desktop search shows about 60
+characters (the end goes missing), a phone feed about 40 (the subject can go missing). YouTube
+publishes neither number; both are the safe side of what fits.
 """
 import argparse, json, re, sys, os
 

@@ -1,46 +1,44 @@
 ---
 name: yt-plan
 description: >-
-  Plan a week or a month of YouTube uploads - what to post, when, and in
-  what order, sized to the creator's actual capacity. Use for "plan my
-  week", "content calendar", "what should I post", "I have no idea what to
-  make next".
+  Plan the coming week or month of uploads - what, when and in what order -
+  sized to the time the creator really has. Use for "plan my week", "content
+  calendar", "what should I post", "I don't know what to make next".
 ---
 
 # yt-plan
 
-A plan that does not fit the week is a list of regrets. Ask two questions before writing anything:
-**how many hours do you actually have**, and **what is already half-made**.
+A plan that does not fit the week becomes a list of guilt. Before writing anything, ask two
+questions: **how many hours do you actually have**, and **what is already half-done**.
 
-## Before you write
+## Before you start
 
-1. Read `~/.claude/youtube/voice.md` if it exists. That is the user's voice profile: how they talk
-   on camera, the words they never use, who they are talking to, what they will not claim. If it
-   does not exist, ask for **three of their own videos**, read or transcribe them, infer the voice,
-   and write the file. A script in the wrong voice is worse than no script, because they have to
-   read it out loud.
-2. Never invent a number, a result or a source. If a figure would strengthen it and you do not have
-   one, ask for it or write the line without it.
+1. Read `~/.claude/youtube/voice.md` if it exists. If not, ask for three of the creator's videos
+   and write it.
+2. Never make up a number. Ask for the channel's best upload day; do not assume one.
 
 ## The shape of a week
 
-- **One anchor.** The video the week is for. It gets the most time and it goes out on the day the
-  channel's own analytics say is best - ask for that, do not assume Tuesday.
-- **One cheap one.** Built from something that exists: a clip, a reaction, a follow-up to the
-  comment that got the most replies last week.
-- **Shorts from the anchor.** Three, cut from the long video, not written separately. `/yt-shorts`
-  finds them.
+- **One main video.** The one the week is for. It gets most of the time and goes out on the day the
+  channel's own analytics say is best.
+- **One quick one**, built from something that exists: a clip, a reply to the most-discussed
+  comment, a follow-up.
+- **Shorts cut from the main video**, not written separately. `/yt-shorts` finds them.
 
-Three uploads on a seven-day week, not seven. A plan that posts daily is not a plan anyone
-recognises, and the empty days are what make the filled ones survive a bad week.
+Two or three uploads a week, not seven. The quiet days are what let the busy ones survive a bad
+week. For a story or history channel, a standalone video a week often beats a numbered series:
+each one can be anyone's first, and numbered parts tend to lose viewers part by part.
+
+If a video retells a source, the plan includes the research day: `/yt-research` before
+`/yt-script`.
 
 ## What to hand back
 
-A table: day, format, working title, the one sentence it promises, and what already exists for it.
-Then the honest line at the bottom - how many hours this costs, and what to drop first if the week
-goes wrong.
+A table: day, format, working title, the one-sentence promise, and what already exists for it.
+Then the honest line underneath: how many hours it costs, and what to drop first if the week goes
+wrong.
 
-## The gate
+## Before you hand it over
 
-Nothing here publishes. This skill writes and you publish. Every output ends in a block the user
-copies, and the last line of every run is the question: **ship it, or change it?**
+This skill drafts; you publish. End with the copy-ready block and one question: **post it as is,
+or another pass?**

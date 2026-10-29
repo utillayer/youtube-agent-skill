@@ -1,16 +1,16 @@
 ---
 name: yt-retention
 description: >-
-  Read a YouTube Studio audience-retention export and find where viewers
-  actually leave, then say what to change. Use for "why do people stop
-  watching", "my retention is bad", a pasted retention chart or CSV, or "fix
-  my pacing".
+  Read a YouTube Studio audience-retention export, find the moments viewers
+  leave, and name the one change to make. Use for "why do people stop
+  watching", "my retention is bad", a retention chart or CSV, or "fix my
+  pacing".
 allowed-tools: Bash(python3 ${CLAUDE_SKILL_DIR}/retention.py *)
 ---
 
 # yt-retention
 
-The retention graph is the only honest feedback YouTube gives you. Almost nobody exports it.
+The retention graph is the most honest feedback a video gets, and most creators never download it.
 
 ```bash
 python3 ${CLAUDE_SKILL_DIR}/retention.py retention.csv --duration 600
@@ -19,34 +19,33 @@ python3 ${CLAUDE_SKILL_DIR}/retention.py retention.csv --duration 600 --transcri
 
 The tools live in this skill's folder. `${CLAUDE_SKILL_DIR}` is that folder in Claude Code; anywhere
 it does not expand (claude.ai, Codex), use the folder this SKILL.md was loaded from.
+The transcript reader is `../yt-edit/deadair.py`, so install the two together.
 
-Getting the file: Studio -> a video -> Analytics -> Engagement -> the audience-retention chart ->
-the download icon -> "Audience retention".
+**Getting the file:** Studio → the video → Analytics → Engagement → the audience-retention chart →
+the download icon → "Audience retention".
 
-What it reads: two columns, a position and the share still watching. The position can be seconds,
-`m:ss`, a percent of the video, or a 0-1 ratio as the Analytics API returns it; the header decides
-when it names the unit, and otherwise anything up to 100 is read as percent. **If the position is a
-percent, always pass `--duration`** (the video length in seconds) - without it the cliffs have no
-timestamps and `--transcript` cannot say what was being said there. Ask for the length rather than
-guess it. The transcript reader is `../yt-edit/deadair.py`, so install the two together.
+**What it reads:** two columns - a position and the share still watching. The position can be
+seconds, `m:ss`, a percent of the video, or a 0-1 ratio as the Analytics API gives it. The header
+decides when it names the unit; otherwise anything up to 100 is read as percent. **If the position
+is a percent, always pass `--duration`** (the length in seconds) - without it the drops have no
+timestamps and the transcript cannot tell you what was being said. Ask for the length; do not guess.
 
 ## Three different problems
 
-- **HOOK LEAK** - what is lost in the first 30 seconds. Under 25% is healthy. This is always the
-  first thing to fix and it is always the first fifteen seconds of script, never the edit.
-- **CLIFFS** - single steep drops. A cliff is a moment: a topic change with no signposting, a
-  sponsor read, a long setup. With `--transcript` the tool prints what was being said there, which
-  is what makes the report actionable instead of interesting.
-- **SLIDE** - the steady bleed across the middle. A flat slide is pacing. The fix is cutting, not
+- **The opening loss**: what goes in the first 30 seconds. Under 25% is healthy. When it is the
+  problem, the fix is always the first fifteen seconds of script, not the edit.
+- **Cliffs**: single steep drops, a specific moment - a topic change with no signal, a sponsor
+  segment, a long setup. With the transcript, the tool prints what was said there, which is what
+  makes the report useful instead of merely interesting.
+- **The slide**: the steady loss across the middle. That is pacing, and the fix is cutting, not
   rewriting.
 
 ## What to hand back
 
-Name the single biggest leak and one change for it. Not a list of five. Then, only if asked, the
-rest. And if the hook leak is healthy and the slide is flat, say the video is fine and the problem
-is packaging - send them to `/yt-package`.
+The biggest problem and one change for it - not five. More only if asked. If the opening is healthy
+and the slide is flat, say the video is fine and the issue is packaging, and point to `/yt-package`.
 
-## The gate
+## Before you hand it over
 
-Nothing here publishes. This skill writes and you publish. Every output ends in a block the user
-copies, and the last line of every run is the question: **ship it, or change it?**
+This skill drafts; you publish. End with the copy-ready block and one question: **post it as is,
+or another pass?**

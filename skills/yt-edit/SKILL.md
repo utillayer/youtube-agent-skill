@@ -1,58 +1,53 @@
 ---
 name: yt-edit
 description: >-
-  Turn a raw recording's transcript into an edit decision list - dead air,
-  filler cues and retakes, with timecodes. Use for "edit this", "cut the
-  dead space", "tighten this video", "I rambled", or any request to shorten
-  footage from a transcript.
+  Turn the transcript of a raw recording into a cut list - silences, filler and
+  false starts, each with timecodes. Use for "edit this", "cut the dead air",
+  "tighten this up", "I rambled", or any request to shorten footage from its
+  transcript.
 allowed-tools: Bash(python3 ${CLAUDE_SKILL_DIR}/deadair.py *)
 ---
 
 # yt-edit
 
-An edit decision list from a timestamped transcript. It prints the cuts. You apply them.
+A cut list from a timestamped transcript. It tells you what to cut; your editor does the cutting.
 
 ```bash
-python3 ${CLAUDE_SKILL_DIR}/deadair.py transcript.srt              # srt, vtt or whisper json
+python3 ${CLAUDE_SKILL_DIR}/deadair.py transcript.srt               # srt, vtt or whisper json
 python3 ${CLAUDE_SKILL_DIR}/deadair.py transcript.srt --floor 0.35 --json
 ```
 
 The tools live in this skill's folder. `${CLAUDE_SKILL_DIR}` is that folder in Claude Code; anywhere
 it does not expand (claude.ai, Codex), use the folder this SKILL.md was loaded from.
 
-No transcript yet? Ask for one, or produce one first - `whisper`, `faster-whisper`, or the caption
-track YouTube generates on an unlisted upload all work. YouTube's auto-caption `.vtt` can go in as it
-is: the inline word timings, the rolling repeated lines and `[Music]`-style annotations are stripped
-on load. Do not guess at timings.
-
-Have a link but no transcript? YouTube's own captions, in one line:
+No transcript yet? `whisper`, `faster-whisper`, or YouTube's own captions on an unlisted upload all
+work. YouTube's auto-caption `.vtt` goes in as it comes: word timings, rolling repeats and
+`[Music]`-style tags are cleaned on load. To fetch it from a link:
 
 ```bash
 yt-dlp --skip-download --write-auto-subs --sub-langs en --sub-format vtt -o transcript "<video url>"
 ```
 
-That writes `transcript.en.vtt`. Swap `en` for the video's language. Auto-captions have no
-punctuation; a `whisper` transcript does, and gives cleaner sentence boundaries.
-
+That writes `transcript.en.vtt`. Swap `en` for the video's language. Auto-captions carry no
+punctuation; a `whisper` transcript does, and gives cleaner sentence edges. Never guess timings.
 
 ## What it finds
 
-- **DEAD** - gaps longer than the floor, trimmed from the MIDDLE so both sides keep a breath.
-  Cutting flush against speech is what makes a tightened take sound gasping.
-- **FILLER** - cues that are nothing but "um", "so yeah", "basically" plus Spanish ("bueno", "o sea"),
-  Hindi ("matlab", "accha", "मतलब") and Nepali ("ani", "khai", "अनि"). Other languages get DEAD and
-  REPEAT but no filler list - say so.
-- **REPEAT** - a sentence restarted. Compared against the last cue that was actually speech, not
-  the literal previous cue, because most retakes have an "um" between the two attempts. The
-  abandoned take is the one cut, and it is usually the shorter of the two.
+- **DEAD**: gaps longer than the floor, trimmed from the middle so both sides keep a breath.
+  Cutting tight against speech is what makes a tightened take sound breathless.
+- **FILLER**: cues that are nothing but filler - English ("um", "so yeah", "basically"), Spanish
+  ("bueno", "o sea"), Hindi ("matlab", "accha", "मतलब") and Nepali ("ani", "khai", "अनि"). Other
+  languages get DEAD and REPEAT only; say so.
+- **REPEAT**: a sentence started again. The abandoned attempt is the one cut, usually the shorter,
+  and it is found even with an "um" between the two tries.
 
-## What it will not do
+## What it does not do
 
-It does not touch media. It has no opinion about your B-roll. A 40% cut on the report is a 40% cut
-of SPEECH, and if the video has a long silent demo in it that number is wrong - check the report
-against the footage before you trust the runtime at the bottom.
+It never touches the media file and has no view on your B-roll. The percentage it reports is of
+speech: if the video has a long silent demo, the runtime it predicts is wrong. Check the list
+against the footage before trusting the final length.
 
-## The gate
+## Before you hand it over
 
-Nothing here publishes. This skill writes and you publish. Every output ends in a block the user
-copies, and the last line of every run is the question: **ship it, or change it?**
+This skill drafts; you publish. End with the copy-ready block and one question: **post it as is,
+or another pass?**

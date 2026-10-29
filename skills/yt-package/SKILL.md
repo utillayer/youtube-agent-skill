@@ -1,62 +1,53 @@
 ---
 name: yt-package
 description: >-
-  Write and lint the title and thumbnail for a YouTube video as one pairing,
-  checking truncation, duplication and vagueness before publish. Use for
-  "title ideas", "what should I call this", "thumbnail text", "my CTR is
-  bad", packaging, or any request to rename or repackage an existing video.
+  Write and test a video's title and thumbnail together, linted for truncation,
+  repetition and vague words before it goes live. Use for "title ideas", "what
+  should I call this", "thumbnail text", "my click-through is low", packaging,
+  or renaming a video that already exists.
 allowed-tools: Bash(python3 ${CLAUDE_SKILL_DIR}/title.py *)
 ---
 
 # yt-package
 
-The title and the thumbnail are ONE unit. Writing them separately is why most packaging fails: the
-thumbnail repeats the title, and half the click surface says the same thing twice.
+A viewer sees the title and the thumbnail in the same glance, so write them as one thing. The
+commonest waste is a thumbnail that repeats the title: two surfaces, one message.
 
 ```bash
-python3 ${CLAUDE_SKILL_DIR}/title.py --title "..." --thumb "AI RAN IT"
-python3 ${CLAUDE_SKILL_DIR}/title.py titles.txt --thumb "AI RAN IT"   # one per line, ranked
+python3 ${CLAUDE_SKILL_DIR}/title.py --title "..." --thumb "THREE WORDS"
+python3 ${CLAUDE_SKILL_DIR}/title.py titles.txt --thumb "THREE WORDS"    # one per line, ranked
 ```
 
 The tools live in this skill's folder. `${CLAUDE_SKILL_DIR}` is that folder in Claude Code; anywhere
 it does not expand (claude.ai, Codex), use the folder this SKILL.md was loaded from.
 
+## Before you start
 
-## Before you write
+1. Read `~/.claude/youtube/voice.md` if it exists. If not, ask for three of the creator's videos
+   and write it. The title should sound like the person in the video.
+2. Never make up a number. "Doubled" needs the before and after.
 
-1. Read `~/.claude/youtube/voice.md` if it exists. That is the user's voice profile: how they talk
-   on camera, the words they never use, who they are talking to, what they will not claim. If it
-   does not exist, ask for **three of their own videos**, read or transcribe them, infer the voice,
-   and write the file. A script in the wrong voice is worse than no script, because they have to
-   read it out loud.
-2. Never invent a number, a result or a source. If a figure would strengthen it and you do not have
-   one, ask for it or write the line without it.
+## What the linter checks, and why
 
-## Rules the tool enforces, and why
+- **Length.** About 60 characters survives desktop search and about 40 a phone feed. YouTube does
+  not publish either number - truncation is by pixel width - so treat them as the safe side, not a
+  law. A desktop cut loses the end; a phone cut can lose the subject. The hard limit is 100, and
+  `<` `>` are not allowed.
+- **Repetition.** The thumbnail says what the title does not.
+- **Thumbnail words.** Three at most. A fourth turns to mush at feed size.
+- **Something concrete.** A number, a name or a date beats any adjective.
+- **Capitals.** Two all-caps words is the limit before it reads as shouting.
 
-- **About 60 characters** survives desktop search, **about 40** a mobile home feed. YouTube publishes
-  neither number - truncation is by pixel width and varies by surface - so treat them as the safe
-  side of a blur, not a rule. Both are reported because they fail differently: a desktop cut loses
-  the tail, a mobile cut can lose the subject. 100 is the hard limit, and `<` `>` are not allowed.
-- **The thumbnail must not repeat the title.** Different words, same promise.
-- **Three words maximum on the thumbnail.** At feed size a fourth word is a grey smear.
-- **A number, a name or a date** beats every adjective available to you.
-- **Two all-caps words is the ceiling** before a title reads as spam.
+## The method
 
-## Write ten, keep two
+1. Write ten titles. Lint them all. Show the best three with their scores and the one issue each has.
+2. For the winner, write the thumbnail: the single image, the expression, at most three words, and
+   how the background keeps contrast at feed size.
+3. If the top two are close, say so and suggest Studio's A/B test (up to three titles or
+   thumbnails, judged by watch time share; desktop Studio only, not for Shorts) instead of
+   pretending the linter can tell them apart. The score is a lint, not a forecast.
 
-Generate ten titles, run them all through `title.py`, show the user the top three with their scores
-and the specific issue on each. For the winner, write the thumbnail brief: the expression, the
-framing, the three words, and what the background has to do to hold contrast at feed size.
+## Before you hand it over
 
-## Then let YouTube decide
-
-Studio can A/B test up to three titles, three thumbnails, or both, and picks by watch time share.
-It runs on desktop Studio, needs advanced features turned on, takes up to two weeks, and does not
-work on Shorts. If the top two are close, say so and hand over both for a test instead of
-pretending the linter can tell them apart. The score is a lint, not a prediction.
-
-## The gate
-
-Nothing here publishes. This skill writes and you publish. Every output ends in a block the user
-copies, and the last line of every run is the question: **ship it, or change it?**
+This skill drafts; you publish. End with the copy-ready block and one question: **post it as is,
+or another pass?**

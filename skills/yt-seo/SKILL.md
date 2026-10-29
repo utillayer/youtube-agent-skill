@@ -1,54 +1,50 @@
 ---
 name: yt-seo
 description: >-
-  Write the description, tags and search-facing text for a YouTube video,
-  aimed at the query a real person types. Use for "write my description",
-  "tags", "SEO", "help this video get found", "nobody is finding this".
+  Write a video's description, tags and search text around what a real person
+  would type. Use for "write my description", "tags", "SEO", "help people find
+  this video", "nobody finds this".
 ---
 
 # yt-seo
 
-Search is a smaller lever than packaging and a bigger one than people think for evergreen videos.
-For a video aimed at the subscriber feed, say so and spend the effort on `/yt-package` instead.
+Search matters less than packaging for most videos, and more than people expect for ones that stay
+useful for years. If a video is made for the subscriber feed, say so and put the effort into
+`/yt-package` instead.
 
-## Before you write
+## Before you start
 
-1. Read `~/.claude/youtube/voice.md` if it exists. That is the user's voice profile: how they talk
-   on camera, the words they never use, who they are talking to, what they will not claim. If it
-   does not exist, ask for **three of their own videos**, read or transcribe them, infer the voice,
-   and write the file. A script in the wrong voice is worse than no script, because they have to
-   read it out loud.
-2. Never invent a number, a result or a source. If a figure would strengthen it and you do not have
-   one, ask for it or write the line without it.
+1. Read `~/.claude/youtube/voice.md` if it exists. If not, ask for three of the creator's videos
+   and write it. A description is read in the creator's voice too.
+2. Never make up a number, a result or a source.
 
 ## The description
 
-- **The first two lines are the only ones anyone reads.** They show above "...more" and they are
-  the search snippet. Say what the video gives them, in the words they would have typed.
-- Then the link or the resource, if there is one, so it is above the fold.
+- **The first two lines are the only ones most people see.** They show above "...more" and become
+  the search snippet. Say what the video gives, in the words someone would type.
+- Then the link or resource, if there is one, while it is still visible.
 - Then chapters (`/yt-chapters` writes them).
-- Then the long version: what is covered, who it is for, what it assumes.
+- Then the long version: what it covers, who it is for, what it assumes. For a sourced video, a
+  sources block citing exactly what it draws on.
 
-The ceiling is 5,000 characters - counted in bytes by the API, so a description in a non-Latin
-script hits it sooner. Nobody needs to get near it.
+The limit is 5,000 characters, counted in bytes by the API, so text in a non-Latin script reaches it
+sooner. Nothing needs to come close.
 
-**Hashtags:** the first three show above the title. Use one to three that a viewer would actually
-tap. More than 60 and YouTube ignores every one of them.
+**Hashtags:** the first three appear above the title. Use one to three that a viewer would tap. Over
+60 and YouTube ignores all of them.
 
-## Tags, honestly
+## Tags
 
-Tags are a weak signal - YouTube's own help page says they "play a minimal role" in discovery. Use them for disambiguation - spellings, the tool
-names, the abbreviations people actually type - and stop. Fifteen is plenty, and the field holds 500
-characters in total. A wall of tags is not a strategy and stuffing unrelated ones is against the
-terms.
+YouTube's own help page says tags "play a minimal role" in discovery. Use them for spellings,
+product names and the abbreviations people type, and stop there. Fifteen is plenty and the field
+holds 500 characters. Stuffing unrelated tags breaks the terms of service.
 
 ## The query test
 
-Before handing anything over, write the three search queries this video should win, and check the
-title and first two description lines contain the words in those queries. If they do not, the
-problem is the title, not the description.
+Before handing over, write the three searches this video should win, and check their words appear
+in the title and the first two lines. If they do not, the title is the problem, not the description.
 
-## The gate
+## Before you hand it over
 
-Nothing here publishes. This skill writes and you publish. Every output ends in a block the user
-copies, and the last line of every run is the question: **ship it, or change it?**
+This skill drafts; you publish. End with the copy-ready block and one question: **post it as is,
+or another pass?**

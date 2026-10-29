@@ -1,51 +1,47 @@
 ---
 name: yt-comment
 description: >-
-  Draft replies to YouTube comments in the creator's voice, triaged by which
-  ones are worth answering. Use for "reply to my comments", "handle the
-  comment section", "someone asked X", or a pasted comment thread.
+  Sort a video's comments by which deserve an answer, then draft short replies
+  in the creator's voice. Use for "reply to my comments", "handle my comment
+  section", "someone asked X", or a pasted comment thread.
 ---
 
 # yt-comment
 
-The comment section is a retention surface, not a chore. Replies in the first few hours are what
-decide whether a thread becomes a conversation other people read.
+The first hours of comments decide whether a thread turns into a conversation other viewers read.
+Treat it as part of the video, not as admin.
 
-## Before you write
+## Before you start
 
-1. Read `~/.claude/youtube/voice.md` if it exists. That is the user's voice profile: how they talk
-   on camera, the words they never use, who they are talking to, what they will not claim. If it
-   does not exist, ask for **three of their own videos**, read or transcribe them, infer the voice,
-   and write the file. A script in the wrong voice is worse than no script, because they have to
-   read it out loud.
-2. Never invent a number, a result or a source. If a figure would strengthen it and you do not have
-   one, ask for it or write the line without it.
+1. Read `~/.claude/youtube/voice.md` if it exists. If not, ask for three of the creator's videos
+   and write it. Replies are in their voice, not yours.
+2. Never make up a fact, a number or a promise.
 
-## Triage first, always
+## Sort first
 
-Sort what the user pastes into four piles and say how many are in each before writing anything:
+Put every comment in one of four groups and give the counts before writing a word:
 
-1. **Questions** - answer them. These are your next video's topics, so note the repeats.
-2. **Corrections** - if they are right, say so plainly and thank them. Never argue a fact you
-   cannot check.
-3. **Praise** - reply to a few, briefly, with something specific from their comment. A wall of
-   identical "thank you!" replies reads as automated because it is.
-4. **Bait** - do not reply. Say so and move on. Never write a comeback, however deserved.
+1. **Questions.** Answer them. Repeated ones are the next video ideas - list them.
+2. **Corrections.** If they are right, say so plainly and thank them. Never argue a fact you cannot
+   check.
+3. **Praise.** Reply to a few, briefly, with something specific from what they wrote. A wall of
+   identical "thanks!" reads as automated because it is.
+4. **Bait.** Do not reply. Say so and move on. No comebacks, however tempting.
 
-## Writing the reply
+## Each reply
 
-- Under 30 words. A long reply in a comment thread is a blog post nobody asked for.
-- Answer the actual question in the first sentence.
-- One question back, only when it is real.
-- No emoji unless the user's own replies use them. Check their voice file.
-- Never promise a video you have not agreed to make.
+- Under 30 words. A long reply in a thread is an essay nobody asked for.
+- Answer in the first sentence.
+- A question back only if it is a real one.
+- Emoji only if the creator uses them in their own replies.
+- Never promise a video that has not been agreed.
 
-## The heart and the pin
+## Pin and heart
 
-Say which ONE comment to pin and why. Pin the question the most people also have, not the nicest
-one. Heart generously - it costs nothing and it is visible.
+Name the one comment to pin and why: the question most viewers also have, not the nicest comment.
+Heart freely; it costs nothing and people see it.
 
-## The gate
+## Before you hand it over
 
-Nothing here publishes. This skill writes and you publish. Every output ends in a block the user
-copies, and the last line of every run is the question: **ship it, or change it?**
+This skill drafts; you publish. End with the copy-ready block and one question: **post it as is,
+or another pass?**

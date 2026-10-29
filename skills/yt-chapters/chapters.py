@@ -1,17 +1,15 @@
 #!/usr/bin/env python3
-"""chapters.py - YouTube chapters from a timestamped transcript.
+"""chapters.py - draft YouTube chapters from a timestamped transcript.
 
     python3 chapters.py transcript.srt            # or .vtt / whisper .json
     python3 chapters.py transcript.srt --target 8 --json
 
-Prints a description block you can paste straight under a video. YouTube's own rules, enforced here
-rather than assumed: the list must start at 00:00, needs at least three entries, and each chapter
-must be at least 10 seconds long. A block that breaks any of those silently does not become
-chapters, which is why this checks instead of trusting.
+Prints a block to paste into the description, checked against YouTube's rules: the first entry at
+00:00, at least three entries, each at least ten seconds. A list that breaks one of those is quietly
+ignored by YouTube, so it is checked here rather than hoped for.
 
-Boundaries come from the gaps - the pauses you actually took between sections - scored by how long
-the pause was and how much the vocabulary changes across it. It is a first draft you retitle, not a
-summariser.
+Boundaries come from the pauses actually taken between sections, weighted by how long the pause is
+and how much the vocabulary changes across it. The titles are placeholders to rewrite, not a summary.
 """
 import argparse, json, os, re, sys
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "yt-edit"))

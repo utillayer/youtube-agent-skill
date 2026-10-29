@@ -1,21 +1,21 @@
 #!/usr/bin/env python3
-"""retention.py - read a YouTube Studio audience-retention export and find the leaks.
+"""retention.py - find where viewers leave, from a YouTube Studio audience-retention export.
 
     python3 retention.py retention.csv
-    python3 retention.py retention.csv --transcript transcript.srt   # names what was said at each drop
-    python3 retention.py retention.csv --duration 612 --json   # percent axis -> cliffs in seconds
+    python3 retention.py retention.csv --transcript transcript.srt   # what was said at each drop
+    python3 retention.py retention.csv --duration 612 --json         # percent axis -> drops in seconds
 
-Get the file from Studio: Analytics -> a video -> Engagement -> the audience-retention chart ->
-the download icon -> "Audience retention". Two columns, a position (percent or seconds) and a
-percentage still watching.
+The file: Studio -> the video -> Analytics -> Engagement -> audience-retention chart -> the download
+icon -> "Audience retention". Two columns: a position (seconds, m:ss, percent or a 0-1 ratio) and
+the share still watching.
 
-It reports three things, because they are three different problems with three different fixes:
-  HOOK LEAK    what you lost in the first 30 seconds
-  CLIFFS       single steep drops - a specific moment people left at
-  SLIDE        the steady bleed rate across the flat middle
+It reports three separate problems, because each has a different fix:
+  HOOK LEAK    what goes in the first 30 seconds (fix the opening lines)
+  CLIFFS       single steep drops at a specific moment (fix that moment)
+  SLIDE        the steady loss across the middle (cut, don't rewrite)
 
-With --transcript it prints what you were saying at each cliff, which is the only version of this
-report you can act on without scrubbing the video yourself.
+With --transcript it prints what was being said at each drop, so you can act on it without
+scrubbing through the video.
 """
 import argparse, csv, json, os, sys
 

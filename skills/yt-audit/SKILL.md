@@ -1,49 +1,45 @@
 ---
 name: yt-audit
 description: >-
-  Audit a YouTube channel end to end - packaging, consistency, the first
-  fifteen seconds, and what to fix first. Use for "audit my channel", "why
-  isn't my channel growing", "review my videos", or a pasted channel URL.
+  Review a whole YouTube channel - packaging, consistency, openings, rhythm -
+  and end with the single fix that matters most. Use for "audit my channel",
+  "why isn't my channel growing", "review my videos", or a pasted channel link.
 allowed-tools: Bash(python3 ${CLAUDE_SKILL_DIR}/../yt-package/title.py *) Bash(python3 ${CLAUDE_SKILL_DIR}/../yt-script/hookscore.py *)
 ---
 
 # yt-audit
 
-An audit that lists twenty problems is a way of avoiding the one that matters. This ends in ONE fix.
+A list of twenty problems is a way to avoid the one that matters. This review ends with **one** fix.
 
-## Before you write
+## Before you start
 
-1. Read `~/.claude/youtube/voice.md` if it exists. That is the user's voice profile: how they talk
-   on camera, the words they never use, who they are talking to, what they will not claim. If it
-   does not exist, ask for **three of their own videos**, read or transcribe them, infer the voice,
-   and write the file. A script in the wrong voice is worse than no script, because they have to
-   read it out loud.
-2. Never invent a number, a result or a source. If a figure would strengthen it and you do not have
-   one, ask for it or write the line without it.
+1. Read `~/.claude/youtube/voice.md` if it exists. If not, ask for three of the creator's videos
+   and write it.
+2. Never make up a number. Use the channel's figures or none.
 
-## What to look at, in this order
+## What to look at, in order
 
-1. **The last ten titles, as a set.** Read them as a list, the way the channel page shows them. Do
-   they promise different things? Run them through `${CLAUDE_SKILL_DIR}/../yt-package/title.py`. A channel where every
-   title is the same shape has a format problem, not a title problem.
-2. **The thumbnails, at feed size.** Shrink them. What survives? If three of them are unreadable at
-   that size, that is the fix and nothing else matters yet.
-3. **The first fifteen seconds of the three most recent.** Transcribe them and score with
-   `${CLAUDE_SKILL_DIR}/../yt-script/hookscore.py`. This is where most channels lose.
-4. **Upload rhythm.** Not frequency - CONSISTENCY. Six videos in one week and then nothing for a
-   month is worse than one a fortnight forever.
-5. **The retention shape**, if they can export it. `/yt-retention`.
+1. **The last ten titles, as a list** - the way the channel page shows them. Do they promise
+   different things? Lint them with `${CLAUDE_SKILL_DIR}/../yt-package/title.py`. When every title has
+   the same shape, the problem is the format, not the titles.
+2. **The thumbnails, at feed size.** Shrink them. What still reads? If three are unreadable small,
+   that is the fix and nothing else matters yet.
+3. **The first fifteen seconds of the last three videos.** Transcribe them and score them with
+   `${CLAUDE_SKILL_DIR}/../yt-script/hookscore.py`. This is where most channels lose people.
+4. **Upload rhythm.** Consistency, not frequency. Six videos in a week and then a silent month does
+   more harm than one every fortnight forever.
+5. **Retention**, if they can export it: `/yt-retention`.
 
 ## What to hand back
 
-- The single biggest fix, named, with what to do this week.
-- Three things that are already working, so they do not break them. Be specific; "your energy is
+- The single biggest fix, named, with what to do about it this week.
+- Three things that already work, so they are not broken by accident. Specific: "your energy is
   good" is not an observation.
-- What NOT to do yet, and why.
+- What not to do yet, and why.
 
-Never open an audit with praise you do not mean, and never end one with a list of twenty things.
+No praise you do not mean at the start, no twenty-item list at the end.
 
-## The gate
+## Before you hand it over
 
-Nothing here publishes. This skill writes and you publish. Every output ends in a block the user
-copies, and the last line of every run is the question: **ship it, or change it?**
+This skill drafts; you publish. End with the copy-ready block and one question: **post it as is,
+or another pass?**

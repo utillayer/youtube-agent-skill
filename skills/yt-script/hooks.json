@@ -1,20 +1,20 @@
 {
- "version": "1.0",
- "note": "21 hook formulas for YouTube. A YouTube hook is the first 15 seconds and it does three jobs: confirm the click the title promised, raise a question the viewer cannot close, and prove the payoff exists. A hook that only does the third is a summary and it leaks. Every formula here carries the shape, a worked example, the failure mode, and the patterns hookscore.py classifies transcribed speech against.",
+ "version": "1.1",
+ "note": "Twenty-one ways to open a YouTube video. The opening has three jobs in about fifteen seconds: keep the title's promise, raise a question the viewer can't answer yet, and show the answer is coming. An opening that only does the last is a summary, and summaries lose people. Each formula has its shape, an example, how it goes wrong, and the patterns hookscore.py uses to recognise it in speech.",
  "rules": [
-  "Confirm the title in the first sentence. A hook that ignores its own title is why people leave at 0:08.",
-  "One idea. A hook carrying two promises keeps neither.",
-  "Specific beats big. '400 to 200,000 in seven months' outperforms 'massive growth'.",
-  "Show the artifact inside 20 seconds if you promised one.",
-  "Never open with who you are. The subscribe pitch has not been earned yet."
+  "Say what the title promised in the first sentence. Viewers who don't hear it in the first few seconds go back to the feed.",
+  "One promise. An opening with two delivers neither.",
+  "Exact beats big: 'from 400 to 200,000 subscribers in seven months' beats 'huge growth'.",
+  "If you promised to show something, show it within twenty seconds.",
+  "Don't open with who you are. Nobody has a reason to care yet."
  ],
  "hooks": [
   {
    "id": "the-statistic",
    "name": "The Statistic",
-   "shape": "A number the viewer did not know, stated flat, then the consequence.",
-   "example": "97% of the people who start a channel quit before video 30. Here is what the other 3% do differently.",
-   "fails_when": "Dies if the number is vague or unverifiable. Say the source out loud.",
+   "shape": "A number the viewer didn't know, said plainly, then what it means for them.",
+   "example": "Most new channels stop before their thirtieth video. Here is what the ones that keep going do differently.",
+   "fails_when": "Dies if the number is vague or can't be checked. Say where it comes from.",
    "match": [
     "\\b\\d+(\\.\\d+)?\\s?%",
     "\\b\\d+ (out of|in) \\d+\\b",
@@ -24,9 +24,9 @@
   {
    "id": "someone-elses-result",
    "name": "Someone Else's Result",
-   "shape": "A named person's outcome, then the mechanism.",
-   "example": "This channel went from 400 subscribers to 200,000 in seven months on one format. I mapped it.",
-   "fails_when": "Do not invent the number. If you cannot name the channel, use a different formula.",
+   "shape": "A named person's result, then how they got it.",
+   "example": "One channel went from 400 subscribers to 200,000 in seven months with a single format. I took it apart.",
+   "fails_when": "Never invent the figure. If you can't name the person, pick another formula.",
    "match": [
     "\\bthis (channel|guy|creator|account)\\b",
     "\\bwent from .* to\\b",
@@ -37,8 +37,8 @@
    "id": "the-mistake",
    "name": "The Mistake",
    "shape": "Name the error the viewer is probably making right now.",
-   "example": "Your first 30 seconds are why nobody finishes your videos. It is not the topic.",
-   "fails_when": "Only works if the mistake is common and the viewer can check it in one second.",
+   "example": "Your first thirty seconds are why people don't finish your videos. And it isn't your topic.",
+   "fails_when": "Works only if the mistake is common and the viewer can recognise it instantly.",
    "match": [
     "\\byou('re| are) (probably |still )?(doing|making)\\b",
     "\\bthe (mistake|reason) (everyone|most people|nobody)\\b",
@@ -48,9 +48,9 @@
   {
    "id": "contrarian-flip",
    "name": "Contrarian Flip",
-   "shape": "State the accepted advice, then reject it.",
-   "example": "Everyone says post daily. I posted once a week for a year and tripled the channel.",
-   "fails_when": "Needs evidence in the next 15 seconds or it reads as contrarian for its own sake.",
+   "shape": "State the usual advice, then reject it.",
+   "example": "Everyone says post every day. I posted once a week for a year and the channel tripled.",
+   "fails_when": "Needs proof in the next fifteen seconds, or it sounds contrary for the sake of it.",
    "match": [
     "\\beveryone (says|thinks|tells you)\\b",
     "\\bis (actually )?wrong\\b",
@@ -60,9 +60,9 @@
   {
    "id": "the-reveal",
    "name": "The Reveal",
-   "shape": "Promise a specific thing will be shown, then show it.",
-   "example": "I am going to show you the exact prompt, on screen, that wrote this video.",
-   "fails_when": "You have to actually show it, early. A reveal at 8:00 is a retention cliff at 1:00.",
+   "shape": "Promise to show a specific thing, then show it.",
+   "example": "I'm going to show you, on screen, the exact prompt that wrote this video.",
+   "fails_when": "Show it early. A reveal at minute eight is a drop-off at minute one.",
    "match": [
     "\\bI('m| am) going to show you\\b",
     "\\bhere('s| is) (the|exactly)\\b",
@@ -72,9 +72,9 @@
   {
    "id": "the-superlative",
    "name": "The Superlative",
-   "shape": "The single best/worst/fastest of a category.",
+   "shape": "The best, worst, fastest or only one of something.",
    "example": "This is the fastest way to turn one long video into thirty Shorts.",
-   "fails_when": "Superlatives are cheap. Earn it by naming what it beat.",
+   "fails_when": "Cheap unless you name what it beat.",
    "match": [
     "\\bthe (best|worst|fastest|easiest|only)\\b",
     "\\bnumber one\\b"
@@ -83,9 +83,9 @@
   {
    "id": "the-clock",
    "name": "The Clock",
-   "shape": "Bound the payoff in time.",
-   "example": "In the next six minutes you will have a working title, thumbnail and script for your next video.",
-   "fails_when": "The clock has to be true. Overrun it and the next video's hook is not believed.",
+   "shape": "Put a time limit on the payoff.",
+   "example": "In the next six minutes you'll have a title, a thumbnail and a script for your next video.",
+   "fails_when": "The clock must be true. Run over once and the next promise isn't believed.",
    "match": [
     "\\bin (the next )?\\d+ (seconds|minutes|hours)\\b",
     "\\bby the end of this video\\b",
@@ -95,9 +95,9 @@
   {
    "id": "i-tried-it",
    "name": "I Tried It",
-   "shape": "First-person experiment with a stated cost.",
-   "example": "I let an AI run my channel for 30 days. I did not touch the uploads.",
-   "fails_when": "Needs a real cost - time, money, risk - or there is no stake.",
+   "shape": "A first-person experiment with a real cost.",
+   "example": "I let an AI run my channel for thirty days and didn't touch a single upload.",
+   "fails_when": "Needs a stake - time, money or risk - or nothing is on the line.",
    "match": [
     "\\bI (tried|spent|tested|let|gave)\\b",
     "\\bfor \\d+ (days|weeks|months)\\b",
@@ -108,8 +108,8 @@
    "id": "the-question",
    "name": "The Question",
    "shape": "Ask the exact question the viewer typed into search.",
-   "example": "Why do your videos die at 30 seconds when the topic is fine?",
-   "fails_when": "Must be the viewer's question, not yours. Pull it from your own comments.",
+   "example": "Why do your videos lose people at thirty seconds when the topic is good?",
+   "fails_when": "It has to be the viewer's question, not yours. Your comments are full of them.",
    "match": [
     "^(why|how|what|when|should|can|do|does|is)\\b",
     "\\?\\s*$"
@@ -118,9 +118,9 @@
   {
    "id": "the-before-after",
    "name": "Before and After",
-   "shape": "Two states, one cut between them.",
-   "example": "This was my thumbnail. This is my thumbnail now. Same video, four times the click-through.",
-   "fails_when": "Only works with a visual. Do not use it on a talking-head-only video.",
+   "shape": "Two states and the cut between them.",
+   "example": "This was my thumbnail. This is it now. Same video, four times the clicks.",
+   "fails_when": "Needs something to show. Don't use it on a talking head alone.",
    "match": [
     "\\bbefore\\b.*\\bafter\\b",
     "\\bthis was\\b.*\\bthis is\\b",
@@ -130,9 +130,9 @@
   {
    "id": "the-teardown",
    "name": "The Teardown",
-   "shape": "Take a real thing apart in public.",
-   "example": "I pulled the nine most-viewed AI videos of the month and broke down what the titles share.",
-   "fails_when": "Name what you pulled and how many. A teardown of one example is an anecdote.",
+   "shape": "Take something real apart in public.",
+   "example": "I pulled the nine most-watched videos in this niche this month and broke down what their titles share.",
+   "fails_when": "Say what you pulled and how many. A teardown of one example is an anecdote.",
    "match": [
     "\\b(broke|break|breaking) (it )?down\\b",
     "\\bteardown\\b",
@@ -143,9 +143,9 @@
   {
    "id": "the-stack",
    "name": "The Stack",
-   "shape": "Two named tools combined into one outcome.",
-   "example": "Claude plus your YouTube Studio export gives you next week's upload schedule in one prompt.",
-   "fails_when": "Both tools must be nameable and the outcome must need both.",
+   "shape": "Two named tools combined into one result.",
+   "example": "Claude plus your Studio export gives you next week's upload plan in one prompt.",
+   "fails_when": "Both tools must be nameable, and the result must need both.",
    "match": [
     "\\b\\w+ (plus|\\+) \\w+\\b",
     "\\bcombine\\b",
@@ -156,8 +156,8 @@
    "id": "the-warning",
    "name": "The Warning",
    "shape": "A cost the viewer is about to pay.",
-   "example": "Do not upload another video until you check this one setting.",
-   "fails_when": "If the cost is small the hook is a lie. Reserve it.",
+   "example": "Don't upload another video until you've checked this one setting.",
+   "fails_when": "If the cost is small the warning is a lie. Use it rarely.",
    "match": [
     "\\bdo not\\b",
     "\\bdon'?t (upload|post|publish|start)\\b",
@@ -168,9 +168,9 @@
   {
    "id": "the-list",
    "name": "The List",
-   "shape": "A counted set, with the count in the first line.",
-   "example": "Seven things I would do differently if I started a channel in 2026.",
-   "fails_when": "The count must be exact and every item must be different in kind.",
+   "shape": "A counted list, with the count in the first line.",
+   "example": "Seven things I'd do differently if I started a channel this year.",
+   "fails_when": "The count must be exact and each item genuinely different.",
    "match": [
     "^\\d+ \\w+",
     "\\b(here are|these are) \\d+\\b"
@@ -179,9 +179,9 @@
   {
    "id": "the-receipt",
    "name": "The Receipt",
-   "shape": "Show the artifact first, explain second.",
-   "example": "This is the analytics page. This video did 40% of the channel's watch time. Here is why.",
-   "fails_when": "Requires a real screenshot. A described receipt is not a receipt.",
+   "shape": "Show the evidence first, explain second.",
+   "example": "This is the analytics page. This one video made forty percent of the channel's watch time. Here's why.",
+   "fails_when": "Needs the real screenshot. A receipt you only describe isn't one.",
    "match": [
     "\\bthis is (the|my)\\b",
     "\\bscreenshot\\b",
@@ -192,9 +192,9 @@
   {
    "id": "the-insider",
    "name": "The Insider",
-   "shape": "Information from inside a system.",
-   "example": "YouTube tells you which videos are underperforming. Almost nobody opens the report.",
-   "fails_when": "Do not claim insider access you do not have.",
+   "shape": "Something from inside a system most people never look at.",
+   "example": "YouTube tells you which of your videos are underperforming. Almost nobody opens that report.",
+   "fails_when": "Never claim access you don't have.",
    "match": [
     "\\b(nobody|almost nobody|most people) (knows?|opens?|uses?)\\b",
     "\\bhidden\\b",
@@ -204,9 +204,9 @@
   {
    "id": "the-impossible",
    "name": "The Impossible Claim",
-   "shape": "State something that sounds untrue, then prove it.",
-   "example": "You can write, title, thumbnail and schedule a week of videos without opening a single editor.",
-   "fails_when": "The proof has to start within 20 seconds or it reads as clickbait.",
+   "shape": "Say something that sounds untrue, then prove it.",
+   "example": "You can write, title and schedule a week of videos without opening an editor.",
+   "fails_when": "The proof must start within twenty seconds, or it reads as clickbait.",
    "match": [
     "\\bwithout\\b",
     "\\bnever\\b",
@@ -217,9 +217,9 @@
   {
    "id": "the-comparison",
    "name": "The Comparison",
-   "shape": "Two named options, one winner.",
-   "example": "I wrote the same video three ways. One of them held 62% and the other two did not.",
-   "fails_when": "Say the losing option out loud. A comparison with no loser is an advert.",
+   "shape": "Two named options and a winner.",
+   "example": "I wrote the same video three ways. One kept sixty-two percent of viewers. The other two didn't.",
+   "fails_when": "Name the loser out loud. A comparison with no loser is an advert.",
    "match": [
     "\\bvs\\.?\\b",
     "\\bversus\\b",
@@ -230,9 +230,9 @@
   {
    "id": "the-origin",
    "name": "The Origin",
-   "shape": "Where a result actually came from.",
-   "example": "Every video on this channel starts in the same 12-line file. Here it is.",
-   "fails_when": "Works once per channel. It is a reveal about you, and you only have one.",
+   "shape": "Where a result really came from.",
+   "example": "Every video on this channel starts in the same twelve-line file. Here it is.",
+   "fails_when": "Works once per channel. It's a reveal about you, and there's only one of you.",
    "match": [
     "\\bevery (video|post) .* starts\\b",
     "\\bit all (starts|started)\\b",
@@ -242,9 +242,9 @@
   {
    "id": "the-deadline",
    "name": "The Deadline",
-   "shape": "Something is changing on a date.",
-   "example": "The old description format stops mattering this month. Here is what replaces it.",
-   "fails_when": "Only use with a real, checkable date. This is the fastest formula to lose trust with.",
+   "shape": "Something changes on a date.",
+   "example": "The old way of writing descriptions stops working this month. This is what replaces it.",
+   "fails_when": "Only with a real date someone can check. Nothing loses trust faster.",
    "match": [
     "\\b(this|next) (week|month|year)\\b",
     "\\bis changing\\b",
@@ -255,9 +255,9 @@
   {
    "id": "the-direct-address",
    "name": "The Direct Address",
-   "shape": "Name the exact viewer in the first six words.",
+   "shape": "Name exactly who this is for in the first six words.",
    "example": "If you have under a thousand subscribers, this is the only video you need this week.",
-   "fails_when": "Narrow beats broad. 'If you make videos' addresses nobody.",
+   "fails_when": "Narrow beats broad. 'If you make videos' speaks to nobody.",
    "match": [
     "^if you\\b",
     "\\bfor (anyone|everyone|people) who\\b",
